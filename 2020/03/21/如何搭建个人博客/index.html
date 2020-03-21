@@ -58,7 +58,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">108字</span>
+            <span class="post-count">878字</span>
         </span>
     </span>
 
@@ -67,7 +67,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1分钟</span>
+            <span class="post-count">3分钟</span>
         </span>
     </span>
 </div>
@@ -96,13 +96,110 @@
 <ul>
 <li><p>下载Git Bash</p>
 <ul>
-<li>使用Git完成对文章的推送，支持不同的操作系统，<a href="https://gitforwindows.org/" target="_blank" rel="noopener">下载地址</a> 。下面以windows系统为例。</li>
+<li><p>使用Git完成对文章的推送，支持不同的操作系统，<a href="https://gitforwindows.org/" target="_blank" rel="noopener">下载地址</a> 。下面以windows系统为例。</p>
+</li>
+<li><p>安装步骤：双击下载好的文件，按照提示安装即可</p>
+</li>
+<li><p>安装完成后打开命令行或单击右键选择  <code>Git Bash Here</code>,输入 <code>git --version</code>查看是否安装成功。</p>
+<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319193756792.png" class="" title="gitbash效果图">
+</li>
+</ul>
+</li>
+<li><p>下载NodeJS</p>
+<ul>
+<li><p>Hexo是基于NodeJS环境的静态博客，所以需要先下载NodeJS <a href="https://nodejs.org/en/" target="_blank" rel="noopener">下载地址</a></p>
+</li>
+<li><p>安装步骤：双击下载好的文件，按照提示完成安装，<strong>注意</strong>：在Custom Setup 这一步选择<code>Add to PATH</code>,这样可以不用再去配置环境变量</p>
+</li>
+<li><p>安装完成后在命令行或GitBash中输入命令<code>node -v</code>查看是否安装成功。</p>
+<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319195856816.png" class="" title="nodeJS安装">
+
+
+
+</li>
 </ul>
 </li>
 </ul>
 <ul>
-<li>安装步骤：双击下载好的文件，按照提示安装即可<ul>
-<li>安装完成后打开命令行或单击右键选择  <code>Git Bash Here</code>,输入 <code>git --version</code>查看是否安装成功。<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319193756792.png" class="" title="gitbash效果图}&lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;ul&gt; &lt;li&gt;&lt;p&gt;下载NodeJS&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;Hexo是基于NodeJS环境的静态博客，所以需要先下载NodeJS &lt;a href&#x3D;https:&#x2F;&#x2F;nodejs.org&#x2F;en&#x2F;&gt;下载地址&lt;&#x2F;a&gt;&lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;安装步骤：双击下载好的文件，按照提示完成安装，&lt;strong&gt;注意&lt;&#x2F;strong&gt;：在Custom Setup 这一步选择&lt;code&gt;Add to PATH&lt;&#x2F;code&gt;,这样可以不用再去配置环境变量&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;安装完成后在命令行或GitBash中输入命令&lt;code&gt;node -v&lt;&#x2F;code&gt;查看是否安装成功。{% asset_img image-20200319195856816.png nodeJS安装}&lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;下载Hexo&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;&lt;p&gt;接下来便是安装主角Hexo了&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;选择你想要存放你未来博客的文件夹，然后输入命令 &lt;code&gt;npm install hexo-cli -g&lt;&#x2F;code&gt;&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;安装完成后，输入&lt;code&gt;hexo -v&lt;&#x2F;code&gt;查看是否安装成功&lt;&#x2F;p&gt; &lt;p&gt; {% asset_img image-20200319200638367.png hexo安装}&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;接下来使用&lt;code&gt;hexo init&lt;&#x2F;code&gt;进行初始化操作，完成之后打开安装文件夹出现以下目录：&lt;&#x2F;p&gt; &lt;p&gt;{% asset_img image-20200319200858769.png 初始化操作}&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;&lt;p&gt;.deploy_git存放的是发布的项目&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;node_modules是相关的依赖包&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;public是存放生成的页面&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;scaffolds存放的是生成文章等的模板&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;source存放的是用命令创建的各种文章&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;themes存放博客的主题，博客的主题是可以自己定义的&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;_config.yml:整个博客的配置文件&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;db.json:解析source中的文件得到的&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;package.json项目所需模块的配置信息&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;p&gt;2.关联到GitHub&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;&lt;p&gt;要让我们的博客可以被外界访问到，就需要借助GitHub。&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;&lt;p&gt;首先需要注册GitHub账号&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;创建账号成功之后在首页点击 &lt;strong&gt;Repositories&lt;&#x2F;strong&gt;旁边的&lt;strong&gt;New&lt;&#x2F;strong&gt;按钮，创建一个新的仓库&lt;&#x2F;p&gt; &lt;p&gt;{% asset_img image-20200319202200025.png 创建仓库}&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;创建仓库需要输入仓库的名字，格式是username.github.io，这里的username必须与前面的Owner（也就是与你的用户名一致），然后点击创建即可，之后就可以通过这个域名来访问你的博客。&lt;&#x2F;p&gt; &lt;p&gt;{% asset_img image-20200319202634270.png 创建仓库}&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;然后在GitBash中配置你的账户信息，将下图中双引号的内容替换为自己的用户名的邮箱&lt;&#x2F;p&gt; &lt;p&gt;{% asset_img image-20200319203101415.png pz}&lt;&#x2F;p&gt; &lt;p&gt;{% asset_img image-20200319203200236.png pz}&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;为增加安全性，我们也创建SSH密钥。在GitBash中shuru&lt;code&gt;ssh-keygen -t rsa -C &quot;填入你的邮箱&quot;&lt;&#x2F;code&gt;,生成过程中会让你输入存放密钥的路径，可按回车选择默认路径。随后在路径中找到id_rsa.pub文件，打开复制文件中的内容，在github的settings中选择SSH and GPG keys，点击New SSH key，title可以随便取，将复制的内容粘贴上去即可。{% asset_img image-20200319205516338.png 生成SSH}&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;完成之后在GitBash中输入&lt;code&gt;ssh -T git@github.com&lt;&#x2F;code&gt;,输入密码进行验证{% asset_img image-20200319205854892.png 验证}&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;p&gt;3.搭建个人博客&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;&lt;p&gt;修改配置文件&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;打开hexo的安装目录，修改&lt;strong&gt;_config.yml&lt;&#x2F;strong&gt;的内容。&lt;strong&gt;注意：冒号之后要加一个英文空格&lt;&#x2F;strong&gt;&lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;figure class&#x3D;highlight plain&gt;&lt;table&gt;&lt;tr&gt;&lt;td class&#x3D;gutter&gt;&lt;pre&gt;&lt;span class&#x3D;line&gt;1&lt;&#x2F;span&gt;&lt;br&gt;&lt;span class&#x3D;line&gt;2&lt;&#x2F;span&gt;&lt;br&gt;&lt;span class&#x3D;line&gt;3&lt;&#x2F;span&gt;&lt;br&gt;&lt;span class&#x3D;line&gt;4&lt;&#x2F;span&gt;&lt;br&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;td&gt;&lt;td class&#x3D;code&gt;&lt;pre&gt;&lt;span class&#x3D;line&gt;deploy:&lt;&#x2F;span&gt;&lt;br&gt;&lt;span class&#x3D;line&gt; type: git&lt;&#x2F;span&gt;&lt;br&gt;&lt;span class&#x3D;line&gt; repo: https:&#x2F;&#x2F;github.com&#x2F;你的账户名&#x2F;你的账户名.github.io&lt;&#x2F;span&gt;&lt;br&gt;&lt;span class&#x3D;line&gt; branch: master&lt;&#x2F;span&gt;&lt;br&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;table&gt;&lt;&#x2F;figure&gt; &lt;ul&gt; &lt;li&gt;&lt;p&gt;修改之后保存，然后在bash中分别执行以下命令。然后打开浏览器输入&lt;a href&#x3D;http:&#x2F;&#x2F;localhost:4000即可访问hexo服务器&gt;http:&#x2F;&#x2F;localhost:4000即可访问hexo服务器&lt;&#x2F;a&gt;&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;hexo clean&lt;&#x2F;li&gt; &lt;li&gt;hexo generate&lt;&#x2F;li&gt; &lt;li&gt;hexo server&lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;将博客部署到github&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;&lt;p&gt;在bash中分别执行以下命令&lt;&#x2F;p&gt; &lt;ul&gt; &lt;li&gt;hexo clean&lt;&#x2F;li&gt; &lt;li&gt;hexo generate&lt;&#x2F;li&gt; &lt;li&gt;hexo deploy(在部署的过程中需要输入gtihub的账号和密码)&lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;li&gt;&lt;p&gt;部署完成后在浏览器中输入&lt;code&gt;https:&#x2F;&#x2F;之前设置的域名&lt;&#x2F;code&gt;就可以访问你的个人博客了！{% asset_img image-20200319211450869.png yemian}&lt;&#x2F;p&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt; &lt;&#x2F;li&gt; &lt;&#x2F;ul&gt;">
+<li><p>下载Hexo</p>
+<ul>
+<li><p>接下来便是安装主角Hexo了</p>
+</li>
+<li><p>选择你想要存放你未来博客的文件夹，然后输入命令 <code>npm install hexo-cli -g</code></p>
+</li>
+<li><p>安装完成后，输入<code>hexo -v</code>查看是否安装成功</p>
+<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319200638367.png" class="" title="hexo安装">
+</li>
+</ul>
+<ul>
+<li><p>接下来使用<code>hexo init</code>进行初始化操作，完成之后打开安装文件夹出现以下目录：</p>
+<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319200858769.png" class="" title="初始化操作">
+
+
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- .deploy_git存放的是发布的项目
+- node_modules是相关的依赖包
+- public是存放生成的页面
+- scaffolds存放的是生成文章等的模板
+- source存放的是用命令创建的各种文章
+- themes存放博客的主题，博客的主题是可以自己定义的
+- _config.yml:整个博客的配置文件
+- db.json:解析source中的文件得到的
+- package.json项目所需模块的配置信息</code></pre><ul>
+<li><p>关联到GitHub</p>
+<p>要让我们的博客可以被外界访问到，就需要借助GitHub。</p>
+<ul>
+<li><p>首先需要注册GitHub账号</p>
+</li>
+<li><p>创建账号成功之后在首页点击 <strong>Repositories</strong>旁边的<strong>New</strong>按钮，创建一个新的仓库</p>
+<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319202200025.png" class="" title="创建仓库">
+</li>
+<li><p>创建仓库需要输入仓库的名字，格式是username.github.io，这里的username必须与前面的Owner（也就是与你的用户名一致），然后点击创建即可，之后就可以通过这个域名来访问你的博客。</p>
+<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319202634270.png" class="" title="创建仓库">
+</li>
+<li><p>然后在GitBash中配置你的账户信息，将下图中双引号的内容替换为自己的用户名的邮箱</p>
+<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319203101415.png" class="" title="pz">
+
+<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319203200236.png" class="" title="pz">
+</li>
+<li><p>为增加安全性，我们也创建SSH密钥。在GitBash中shuru<code>ssh-keygen -t rsa -C &quot;填入你的邮箱&quot;</code>,生成过程中会让你输入存放密钥的路径，可按回车选择默认路径。随后在路径中找到id_rsa.pub文件，打开复制文件中的内容，在github的settings中选择SSH and GPG keys，点击New SSH key，title可以随便取，将复制的内容粘贴上去即可。</p>
+<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319205516338.png" class="" title="生成SSH">
+</li>
+<li><p>完成之后在GitBash中输入<code>ssh -T git@github.com</code>,输入密码进行验证</p>
+<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319205854892.png" class="" title="验证">
+</li>
+</ul>
+</li>
+<li><p>修改配置文件</p>
+<ul>
+<li><p>打开hexo的安装目录，修改<strong>_config.yml</strong>的内容。<strong>注意：冒号之后要加一个英文空格</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;你的账户名&#x2F;你的账户名.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改之后保存，然后在bash中分别执行以下命令。然后打开浏览器输入<a href="http://localhost:4000即可访问hexo服务器">http://localhost:4000即可访问hexo服务器</a></p>
+<ul>
+<li>hexo clean</li>
+<li>hexo generate</li>
+<li>hexo server</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>将博客部署到github</p>
+<ul>
+<li>在bash中分别执行以下命令<ul>
+<li>hexo clean</li>
+<li>hexo generate</li>
+<li>hexo deploy(在部署的过程中需要输入gtihub的账号和密码)</li>
+</ul>
+</li>
+<li>部署完成后在浏览器中输入<code>https://之前设置的域名</code>就可以访问你的个人博客了！</li>
+</ul>
+</li>
+</ul>
+<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319211450869.png" class="" title="yemian">
       
       <!-- reward -->
       

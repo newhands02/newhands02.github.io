@@ -69,6 +69,117 @@
     
     
     
+    <article id="post-bWAPP-day-01" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/03/22/bWAPP-day-01/"
+    >bWAPP-day-01</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/03/22/bWAPP-day-01/" class="article-date">
+  <time datetime="2020-03-22T04:30:52.220Z" itemprop="datePublished">2020-03-22</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <p>title: bWAPP_day_01<br>date: 2020-03-22 12:30:52<br>tags: bwapp</p>
+<h1 id="BWAPP-学习笔记-（一）"><a href="#BWAPP-学习笔记-（一）" class="headerlink" title="BWAPP 学习笔记 （一）"></a>BWAPP 学习笔记 （一）</h1><h2 id="A1-Injection"><a href="#A1-Injection" class="headerlink" title="A1 -Injection"></a>A1 -Injection</h2><p>1.HTML Injection</p>
+<p>漏洞介绍：html注入是指用户在输入端输入可执行的HTML代码，而服务端没有对该输入进行合理的过滤，导致浏览器解析执行HTML代码。漏洞危害：严重</p>
+<ul>
+<li><p>Reflected(CET)</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322124442622.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322124442622.png" class="" title="get"></p>
+<p>可以看到页面将我们输入的内容直接输入在页面上，所以尝试如输入<em>POC</em>:<code>&lt;scirpt&gt;alert(document.cookie)&lt;/script&gt;</code></p>
+</li>
+</ul>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322125044982.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322125044982.png" class="" title="get"></p>
+<p>发现代码被成功执行。打开网页源代码，发现它是用htmli（）函数来处理我们的输入</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322133412686.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322133412686.png" class="" title="htmli"></p>
+<p>找到htmli函数，其实现原理是：根据不同的安全等级采取不同的过滤函数，等级为low是no_check也</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322192313489.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322192313489.png" class="" title="htmli"></p>
+<p>就是不过滤，等级为medium和high是才用xss_check_1和xss_check_3过滤，函数实现为：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322134022287.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322134022287.png" class="" title="xss1"></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322134138158.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322134138158.png" class="" title="xss3"></p>
+<p>可以看到两个函数都是将特殊字符进行html转义，所以可以考虑将&lt;&gt;用%3c、%3e的形式进行绕过</p>
+<ul>
+<li>Reflected（POST）</li>
+</ul>
+<p>POST和GET在注入方式上没有本质上的不同，二者的区别在于参数传递的方式，GET方式是将输入的内容以?arg1=value1 and arg2=value2….的方式拼接到请求的url后面传递给服务器，而POST方式是将参数放在请求的在请求体中，只有通过抓包的方式才能看见。可以在form等元素的method属性中定义参数的传递方式。</p>
+<ul>
+<li><p>Reflected-URL</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322144315011.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322144315011.png" class="" title="url"></p>
+</li>
+</ul>
+<p>可以看到是将当前的url输出到页面上，所以尝试将POC拼接到当前的url后面，发现我们的输入被转义，没有成功执行。说明事情没有这么简单，所以尝试打开网页源码，同样找到处理的函数，发现在</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322164915762.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322164915762.png" class="" title="url"></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322173542148.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322173542148.png" class="" title="url% 安全等级为low时，url等于host和request_URI的拼接，所以尝试抓包，并修改请求中的url ![](D:\MyJava\blog\source\_posts\bWAPP-day-01\image-20200322165227599.png){% asset_img image-20200322165227599.png zhuabao"></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322165542811.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322165542811.png" class="" title="zhuabao"></p>
+<p>结果成功进行了注入！</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322165629418.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322165629418.png" class="" title="jieguo"></p>
+<p>安全等级为medium时使用script代码代替直接输出，目前还不知道如何绕过，欢迎大佬指点！</p>
+<ul>
+<li><p>Stored(blog)</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322181501156.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322181501156.png" class="" title="blog"></p>
+<p>可以看到是类似于留言板的功能，也是将我们输入的内容输出到页面上，注入过程同上</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322181908879.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322181908879.png" class="" title="blog"></p>
+<p>与上面反射型的注入不同的是存储型的注入是长期存在的，输入一次后每次该页面被访问代码都将执行，危害更大。</p>
+</li>
+<li><p>iframe injection</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322182859417.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322182859417.png" class="" title="iframe"></p>
+<p>进入到页面后可以猜测该网页是利用iframe将robots.txt文件展示在页面上，robots.txt是在bwapp存储路径下的资源文件，那么可想而知我们如果将robots.txt替换为其他文件就可以做到任意文件的读取！</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322200016910.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322200016910.png" class="" title="iframe"></p>
+</li>
+</ul>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-如何搭建个人博客" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 

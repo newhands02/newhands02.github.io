@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    如何搭建个人博客 |  Hexo
+    bWAPP-day-01 |  Hexo
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -30,7 +30,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-如何搭建个人博客" class="article article-type-post" itemscope
+  <article id="post-bWAPP-day-01" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -38,7 +38,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  如何搭建个人博客
+  bWAPP-day-01
 </h1>
   
 
@@ -47,8 +47,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="article-date">
-  <time datetime="2020-03-21T12:01:49.000Z" itemprop="datePublished">2020-03-21</time>
+      <a href="/2020/03/22/bWAPP-day-01/" class="article-date">
+  <time datetime="2020-03-22T04:30:52.220Z" itemprop="datePublished">2020-03-22</time>
 </a>
       
       
@@ -58,7 +58,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">886字</span>
+            <span class="post-count">645字</span>
         </span>
     </span>
 
@@ -67,7 +67,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3分钟</span>
+            <span class="post-count">2分钟</span>
         </span>
     </span>
 </div>
@@ -92,124 +92,51 @@
       
 
       
-      <h1 id="如何搭建免费的个人博客"><a href="#如何搭建免费的个人博客" class="headerlink" title="如何搭建免费的个人博客"></a>如何搭建免费的个人博客</h1><h2 id="使用Github-NodeJS-Hexo"><a href="#使用Github-NodeJS-Hexo" class="headerlink" title="使用Github+NodeJS+Hexo"></a>使用Github+NodeJS+Hexo</h2><p>1.环境搭建</p>
+      <p>title: bWAPP_day_01<br>date: 2020-03-22 12:30:52<br>tags: bwapp</p>
+<h1 id="BWAPP-学习笔记-（一）"><a href="#BWAPP-学习笔记-（一）" class="headerlink" title="BWAPP 学习笔记 （一）"></a>BWAPP 学习笔记 （一）</h1><h2 id="A1-Injection"><a href="#A1-Injection" class="headerlink" title="A1 -Injection"></a>A1 -Injection</h2><p>1.HTML Injection</p>
+<p>漏洞介绍：html注入是指用户在输入端输入可执行的HTML代码，而服务端没有对该输入进行合理的过滤，导致浏览器解析执行HTML代码。漏洞危害：严重</p>
 <ul>
-<li><p>下载Git Bash</p>
-<ul>
-<li>使用Git完成对文章的推送，支持不同的操作系统，<a href="https://gitforwindows.org/" target="_blank" rel="noopener">下载地址</a> 。下面以windows系统为例。</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>安装步骤：双击下载好的文件，按照提示安装即可</p>
-<ul>
-<li><p>安装完成后打开命令行或单击右键选择  <code>Git Bash Here</code>,输入 <code>git --version</code>查看是否安装成功。</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319193756792.png" class="" title="gitbash效果图">
+<li><p>Reflected(CET)</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322124442622.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322124442622.png" class="" title="get"></p>
+<p>可以看到页面将我们输入的内容直接输入在页面上，所以尝试如输入<em>POC</em>:<code>&lt;scirpt&gt;alert(document.cookie)&lt;/script&gt;</code></p>
 </li>
 </ul>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322125044982.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322125044982.png" class="" title="get"></p>
+<p>发现代码被成功执行。打开网页源代码，发现它是用htmli（）函数来处理我们的输入</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322133412686.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322133412686.png" class="" title="htmli"></p>
+<p>找到htmli函数，其实现原理是：根据不同的安全等级采取不同的过滤函数，等级为low是no_check也</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322192313489.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322192313489.png" class="" title="htmli"></p>
+<p>就是不过滤，等级为medium和high是才用xss_check_1和xss_check_3过滤，函数实现为：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322134022287.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322134022287.png" class="" title="xss1"></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322134138158.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322134138158.png" class="" title="xss3"></p>
+<p>可以看到两个函数都是将特殊字符进行html转义，所以可以考虑将&lt;&gt;用%3c、%3e的形式进行绕过</p>
+<ul>
+<li>Reflected（POST）</li>
+</ul>
+<p>POST和GET在注入方式上没有本质上的不同，二者的区别在于参数传递的方式，GET方式是将输入的内容以?arg1=value1 and arg2=value2….的方式拼接到请求的url后面传递给服务器，而POST方式是将参数放在请求的在请求体中，只有通过抓包的方式才能看见。可以在form等元素的method属性中定义参数的传递方式。</p>
+<ul>
+<li><p>Reflected-URL</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322144315011.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322144315011.png" class="" title="url"></p>
 </li>
 </ul>
+<p>可以看到是将当前的url输出到页面上，所以尝试将POC拼接到当前的url后面，发现我们的输入被转义，没有成功执行。说明事情没有这么简单，所以尝试打开网页源码，同样找到处理的函数，发现在</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322164915762.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322164915762.png" class="" title="url"></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322173542148.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322173542148.png" class="" title="url% 安全等级为low时，url等于host和request_URI的拼接，所以尝试抓包，并修改请求中的url ![](D:\MyJava\blog\source\_posts\bWAPP-day-01\image-20200322165227599.png){% asset_img image-20200322165227599.png zhuabao"></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322165542811.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322165542811.png" class="" title="zhuabao"></p>
+<p>结果成功进行了注入！</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322165629418.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322165629418.png" class="" title="jieguo"></p>
+<p>安全等级为medium时使用script代码代替直接输出，目前还不知道如何绕过，欢迎大佬指点！</p>
 <ul>
-<li><p>下载NodeJS</p>
-<ul>
-<li>Hexo是基于NodeJS环境的静态博客，所以需要先下载NodeJS <a href="https://nodejs.org/en/" target="_blank" rel="noopener">下载地址</a></li>
-</ul>
+<li><p>Stored(blog)</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322181501156.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322181501156.png" class="" title="blog"></p>
+<p>可以看到是类似于留言板的功能，也是将我们输入的内容输出到页面上，注入过程同上</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322181908879.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322181908879.png" class="" title="blog"></p>
+<p>与上面反射型的注入不同的是存储型的注入是长期存在的，输入一次后每次该页面被访问代码都将执行，危害更大。</p>
 </li>
-<li><p>安装步骤：双击下载好的文件，按照提示完成安装，<strong>注意</strong>：在Custom Setup 这一步选择<code>Add to PATH</code>,这样可以不用再去配置环境变量</p>
-</li>
-<li><p>安装完成后在命令行或GitBash中输入命令<code>node -v</code>查看是否安装成功。</p>
-  <img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319195856816.png" class="" title="nodeJS安装">
-</li>
-<li><p>下载Hexo</p>
-<ul>
-<li><p>接下来便是安装主角Hexo了</p>
-</li>
-<li><p>选择你想要存放你未来博客的文件夹，然后输入命令 <code>npm install hexo-cli -g</code></p>
-</li>
-<li><p>安装完成后，输入<code>hexo -v</code>查看是否安装成功</p>
- <img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319200638367.png" class="" title="hexo安装">
-</li>
-<li><p>接下来使用<code>hexo init</code>进行初始化操作，完成之后打开安装文件夹出现以下目录：</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319200858769.png" class="" title="初始化操作">
-
-<ul>
-<li><p>.deploy_git存放的是发布的项目</p>
-</li>
-<li><p>node_modules是相关的依赖包</p>
-</li>
-<li><p>public是存放生成的页面</p>
-</li>
-<li><p>scaffolds存放的是生成文章等的模板</p>
-</li>
-<li><p>source存放的是用命令创建的各种文章</p>
-</li>
-<li><p>themes存放博客的主题，博客的主题是可以自己定义的</p>
-</li>
-<li><p>_config.yml:整个博客的配置文件</p>
-</li>
-<li><p>db.json:解析source中的文件得到的</p>
-</li>
-<li><p>package.json项目所需模块的配置信息</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>2.关联到GitHub</p>
-<ul>
-<li><p>要让我们的博客可以被外界访问到，就需要借助GitHub。</p>
-<ul>
-<li><p>首先需要注册GitHub账号</p>
-</li>
-<li><p>创建账号成功之后在首页点击 <strong>Repositories</strong>旁边的<strong>New</strong>按钮，创建一个新的仓库</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319202200025.png" class="" title="创建仓库">
-</li>
-<li><p>创建仓库需要输入仓库的名字，格式是username.github.io，这里的username必须与前面的Owner（也就是与你的用户名一致），然后点击创建即可，之后就可以通过这个域名来访问你的博客。</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319202634270.png" class="" title="创建仓库">
-</li>
-<li><p>然后在GitBash中配置你的账户信息，将下图中双引号的内容替换为自己的用户名的邮箱</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319203101415.png" class="" title="pz">
-
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319203200236.png" class="" title="pz">
-</li>
-<li><p>为增加安全性，我们也创建SSH密钥。在GitBash中shuru<code>ssh-keygen -t rsa -C &quot;填入你的邮箱&quot;</code>,生成过程中会让你输入存放密钥的路径，可按回车选择默认路径。随后在路径中找到id_rsa.pub文件，打开复制文件中的内容，在github的settings中选择SSH and GPG keys，点击New SSH key，title可以随便取，将复制的内容粘贴上去即可。</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319205516338.png" class="" title="生成SSH">
-</li>
-<li><p>完成之后在GitBash中输入<code>ssh -T git@github.com</code>,输入密码进行验证<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319205854892.png" class="" title="验证"></p>
-</li>
-</ul>
-</li>
-</ul>
-<p>3.搭建个人博客</p>
-<ul>
-<li><p>修改配置文件</p>
-<ul>
-<li>打开hexo的安装目录，修改<strong>_config.yml</strong>的内容。<strong>注意：冒号之后要加一个英文空格</strong></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;你的账户名&#x2F;你的账户名.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>修改之后保存，然后在bash中分别执行以下命令。然后打开浏览器输入<a href="http://localhost:4000即可访问hexo服务器">http://localhost:4000即可访问hexo服务器</a></p>
-<ul>
-<li>hexo clean</li>
-<li>hexo generate</li>
-<li>hexo server</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>将博客部署到github</p>
-<ul>
-<li><p>在bash中分别执行以下命令</p>
-<ul>
-<li>hexo clean</li>
-<li>hexo generate</li>
-<li>hexo deploy(在部署的过程中需要输入gtihub的账号和密码)</li>
-</ul>
-</li>
-<li><p>部署完成后在浏览器中输入<code>https://之前设置的域名</code>就可以访问你的个人博客了！<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319211450869.png" class="" title="yemian"></p>
-</li>
-</ul>
+<li><p>iframe injection</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322182859417.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322182859417.png" class="" title="iframe"></p>
+<p>进入到页面后可以猜测该网页是利用iframe将robots.txt文件展示在页面上，robots.txt是在bwapp存储路径下的资源文件，那么可想而知我们如果将robots.txt替换为其他文件就可以做到任意文件的读取！</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322200016910.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322200016910.png" class="" title="iframe"></p>
 </li>
 </ul>
 
@@ -281,15 +208,13 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/22/bWAPP-day-01/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/" rel="tag">blog</a></li></ul>
-
 
     </footer>
 
@@ -299,19 +224,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/03/22/bWAPP-day-01/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            bWAPP-day-01
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/03/19/hello-world/" class="article-nav-link">
+      <a href="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Hello World</div>
+        <div class="article-nav-title">如何搭建个人博客</div>
       </a>
     
   </nav>

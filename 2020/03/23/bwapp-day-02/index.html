@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    bwapp-day-01 |  Hexo
+    bwapp-day-02 |  Hexo
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -30,7 +30,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-bWAPP-day-01" class="article article-type-post" itemscope
+  <article id="post-bwapp-day-02" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -38,7 +38,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  bwapp-day-01
+  bwapp-day-02
 </h1>
   
 
@@ -47,8 +47,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/03/22/bWAPP-day-01/" class="article-date">
-  <time datetime="2020-03-22T04:30:52.000Z" itemprop="datePublished">2020-03-22</time>
+      <a href="/2020/03/23/bwapp-day-02/" class="article-date">
+  <time datetime="2020-03-23T11:20:09.000Z" itemprop="datePublished">2020-03-23</time>
 </a>
       
   <div class="article-category">
@@ -62,7 +62,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">636字</span>
+            <span class="post-count">500字</span>
         </span>
     </span>
 
@@ -71,7 +71,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">2分钟</span>
+            <span class="post-count">1分钟</span>
         </span>
     </span>
 </div>
@@ -96,52 +96,39 @@
       
 
       
-      <h1 id="BWAPP-学习笔记-（一）"><a href="#BWAPP-学习笔记-（一）" class="headerlink" title="BWAPP 学习笔记 （一）"></a>BWAPP 学习笔记 （一）</h1><h2 id="A1-Injection"><a href="#A1-Injection" class="headerlink" title="A1 -Injection"></a>A1 -Injection</h2><p>1.HTML Injection</p>
-<p>漏洞介绍：html注入是指用户在输入端输入可执行的HTML代码，而服务端没有对该输入进行合理的过滤，导致浏览器解析执行HTML代码。漏洞危害：严重</p>
+      <h1 id="BWAPP学习笔记-二"><a href="#BWAPP学习笔记-二" class="headerlink" title="BWAPP学习笔记(二)"></a>BWAPP学习笔记(二)</h1><p>1.命令注入</p>
 <ul>
-<li><p>Reflected(CET)</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322124442622.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322124442622.png" class="" title="get"></p>
-<p>可以看到页面将我们输入的内容直接输入在页面上，所以尝试如输入<em>POC</em>:<code>&lt;scirpt&gt;alert(document.cookie)&lt;/script&gt;</code></p>
+<li><p>OS Command Injection</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323193553551.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323193553551.png" class="" title="oscommand"></p>
 </li>
 </ul>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322125044982.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322125044982.png" class="" title="get"></p>
-<p>发现代码被成功执行。打开网页源代码，发现它是用htmli（）函数来处理我们的输入</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322133412686.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322133412686.png" class="" title="htmli"></p>
-<p>找到htmli函数，其实现原理是：根据不同的安全等级采取不同的过滤函数，等级为low是no_check也</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322192313489.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322192313489.png" class="" title="htmli"></p>
-<p>就是不过滤，等级为medium和high是才用xss_check_1和xss_check_3过滤，函数实现为：</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322134022287.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322134022287.png" class="" title="xss1"></p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322134138158.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322134138158.png" class="" title="xss3"></p>
-<p>可以看到两个函数都是将特殊字符进行html转义，所以可以考虑将&lt;&gt;用%3c、%3e的形式进行绕过</p>
+<p>进入页面后可以看到是一个DNS查询功能，看标题的提示应该是可以输入控制台命令并执行的漏洞，尝试着输入<code>&amp; whoami</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323195844911.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323195844911.png" class="" title="oscommand"></p>
+<p> 发现whoami命令被成功执行，注入成功。接着来分析网页源代码，输入域名后执行的操作如下：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323200245049.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323200245049.png" class="" title="caozuo"></p>
+<p>这里调用了两个函数，分别是shell_exec()和commandi()。shell_exec()是php的内置函数，功能是通过系统shell执行命令并将结果以字符串的形式返回。commandi()是输入处理函数，安全等级为low是不处理，为medium时会过滤掉&amp;和;。这条函数的原本作用是执行”nslookup 域名”命令，但是在shell中用”;”、”&amp;”、”|”等符号链接的多个命令都能够执行，所以我们便能利用这个漏洞执行任意命令。</p>
 <ul>
-<li>Reflected（POST）</li>
-</ul>
-<p>POST和GET在注入方式上没有本质上的不同，二者的区别在于参数传递的方式，GET方式是将输入的内容以?arg1=value1 and arg2=value2….的方式拼接到请求的url后面传递给服务器，而POST方式是将参数放在请求的在请求体中，只有通过抓包的方式才能看见。可以在form等元素的method属性中定义参数的传递方式。</p>
-<ul>
-<li><p>Reflected-URL</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322144315011.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322144315011.png" class="" title="url"></p>
+<li><p>OS Command Injection(blind)</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323202233264.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323202233264.png" class="" title="blind"></p>
 </li>
 </ul>
-<p>可以看到是将当前的url输出到页面上，所以尝试将POC拼接到当前的url后面，发现我们的输入被转义，没有成功执行。说明事情没有这么简单，所以尝试打开网页源码，同样找到处理的函数，发现在</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322164915762.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322164915762.png" class="" title="url"></p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322173542148.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322173542148.png" class="" title="url% 安全等级为low时，url等于host和request_URI的拼接，所以尝试抓包，并修改请求中的url ![](D:\MyJava\blog\source\_posts\bWAPP-day-01\image-20200322165227599.png){% asset_img image-20200322165227599.png zhuabao"></p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322165542811.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322165542811.png" class="" title="zhuabao"></p>
-<p>结果成功进行了注入！</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322165629418.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322165629418.png" class="" title="jieguo"></p>
-<p>安全等级为medium时使用script代码代替直接输出，目前还不知道如何绕过，欢迎大佬指点！</p>
+<p>进入到页面，按照提示输入IP地址,也试着将我们想要执行的命令拼接上去，查看执行结果。发现两次</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323202417409.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323202417409.png" class="" title="result"></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323202734997.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323202734997.png" class="" title="result2"></p>
+<p>都显示的是同一句话，那么到底命令有没有被执行呢？所谓盲注，就是我们无法看到命令执行的结果，需要从其他方面进行验证，一个简单的方法就是比较两次页面响应的时间。</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323203108822.png" alt="image-20200323203108822"><img src="/2020/03/23/bwapp-day-02/image-20200323203108822.png" class="" title="time1"></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323203254870.png" alt="image-20200323203254870"><img src="/2020/03/23/bwapp-day-02/image-20200323203254870.png" class="" title="time2"></p>
+<p>通过比较我们可以发现，第一次页面响应的时间为170ms，而拼接上命令之后响应时间为220ms</p>
 <ul>
-<li><p>Stored(blog)</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322181501156.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322181501156.png" class="" title="blog"></p>
-<p>可以看到是类似于留言板的功能，也是将我们输入的内容输出到页面上，注入过程同上</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322181908879.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322181908879.png" class="" title="blog"></p>
-<p>与上面反射型的注入不同的是存储型的注入是长期存在的，输入一次后每次该页面被访问代码都将执行，危害更大。</p>
-</li>
-<li><p>iframe injection</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322182859417.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322182859417.png" class="" title="iframe"></p>
-<p>进入到页面后可以猜测该网页是利用iframe将robots.txt文件展示在页面上，robots.txt是在bwapp存储路径下的资源文件，那么可想而知我们如果将robots.txt替换为其他文件就可以做到任意文件的读取！</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322200016910.png" alt=""><img src="/2020/03/22/bWAPP-day-01/image-20200322200016910.png" class="" title="iframe"></p>
+<li><p>PHP Code Injection</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323204021849.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323204021849.png" class="" title="php"></p>
 </li>
 </ul>
+<p>进入页面后，点击message，页面输出test，通过题目我们可以猜测是能够执行PHP代码的漏洞，总之还是先来查看源代码：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323204416274.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323204416274.png" class="" title="php"></p>
+<p>这段代码的功能就是执行”echo+参数message”，安全等级低时没有对message参数进行过滤，这样我们只要让message等于我们要执行的代码就好了，把上面的shell_exec()函数拿来现学现用：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323204803802.png" alt="image-20200323204803802"><img src="/2020/03/23/bwapp-day-02/image-20200323204803802.png" class="" title="success"></p>
+<p>注入成功！</p>
 
       
       <!-- reward -->
@@ -211,14 +198,14 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/22/bWAPP-day-01/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/23/bwapp-day-02/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/day01/" rel="tag">day01</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/day02/" rel="tag">day02</a></li></ul>
 
 
     </footer>
@@ -229,19 +216,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/03/23/bwapp-day-02/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            bwapp-day-02
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="article-nav-link">
+      <a href="/2020/03/22/bWAPP-day-01/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">如何搭建个人博客</div>
+        <div class="article-nav-title">bwapp-day-01</div>
       </a>
     
   </nav>

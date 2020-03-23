@@ -69,7 +69,7 @@
     
     
     
-    <article id="post-bWAPP-day-01" class="article article-type-post" itemscope
+    <article id="post-bwapp-day-02" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -77,8 +77,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2020/03/22/bWAPP-day-01/"
-    >bWAPP-day-01</a
+  <a class="article-title" href="/2020/03/23/bwapp-day-02/"
+    >bwapp-day-02</a
   >
 </h2>
   
@@ -88,10 +88,14 @@
 
     
     <div class="article-meta">
-      <a href="/2020/03/22/bWAPP-day-01/" class="article-date">
-  <time datetime="2020-03-22T04:30:52.220Z" itemprop="datePublished">2020-03-22</time>
+      <a href="/2020/03/23/bwapp-day-02/" class="article-date">
+  <time datetime="2020-03-23T11:20:09.000Z" itemprop="datePublished">2020-03-23</time>
 </a>
       
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/bwapp/">bwapp</a>
+  </div>
+
       
       
       
@@ -106,8 +110,110 @@
       
 
       
-      <p>title: bWAPP_day_01<br>date: 2020-03-22 12:30:52<br>tags: bwapp</p>
-<h1 id="BWAPP-学习笔记-（一）"><a href="#BWAPP-学习笔记-（一）" class="headerlink" title="BWAPP 学习笔记 （一）"></a>BWAPP 学习笔记 （一）</h1><h2 id="A1-Injection"><a href="#A1-Injection" class="headerlink" title="A1 -Injection"></a>A1 -Injection</h2><p>1.HTML Injection</p>
+      <h1 id="BWAPP学习笔记-二"><a href="#BWAPP学习笔记-二" class="headerlink" title="BWAPP学习笔记(二)"></a>BWAPP学习笔记(二)</h1><p>1.命令注入</p>
+<ul>
+<li><p>OS Command Injection</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323193553551.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323193553551.png" class="" title="oscommand"></p>
+</li>
+</ul>
+<p>进入页面后可以看到是一个DNS查询功能，看标题的提示应该是可以输入控制台命令并执行的漏洞，尝试着输入<code>&amp; whoami</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323195844911.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323195844911.png" class="" title="oscommand"></p>
+<p> 发现whoami命令被成功执行，注入成功。接着来分析网页源代码，输入域名后执行的操作如下：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323200245049.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323200245049.png" class="" title="caozuo"></p>
+<p>这里调用了两个函数，分别是shell_exec()和commandi()。shell_exec()是php的内置函数，功能是通过系统shell执行命令并将结果以字符串的形式返回。commandi()是输入处理函数，安全等级为low是不处理，为medium时会过滤掉&amp;和;。这条函数的原本作用是执行”nslookup 域名”命令，但是在shell中用”;”、”&amp;”、”|”等符号链接的多个命令都能够执行，所以我们便能利用这个漏洞执行任意命令。</p>
+<ul>
+<li><p>OS Command Injection(blind)</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323202233264.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323202233264.png" class="" title="blind"></p>
+</li>
+</ul>
+<p>进入到页面，按照提示输入IP地址,也试着将我们想要执行的命令拼接上去，查看执行结果。发现两次</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323202417409.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323202417409.png" class="" title="result"></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323202734997.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323202734997.png" class="" title="result2"></p>
+<p>都显示的是同一句话，那么到底命令有没有被执行呢？所谓盲注，就是我们无法看到命令执行的结果，需要从其他方面进行验证，一个简单的方法就是比较两次页面响应的时间。</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323203108822.png" alt="image-20200323203108822"><img src="/2020/03/23/bwapp-day-02/image-20200323203108822.png" class="" title="time1"></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323203254870.png" alt="image-20200323203254870"><img src="/2020/03/23/bwapp-day-02/image-20200323203254870.png" class="" title="time2"></p>
+<p>通过比较我们可以发现，第一次页面响应的时间为170ms，而拼接上命令之后响应时间为220ms</p>
+<ul>
+<li><p>PHP Code Injection</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323204021849.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323204021849.png" class="" title="php"></p>
+</li>
+</ul>
+<p>进入页面后，点击message，页面输出test，通过题目我们可以猜测是能够执行PHP代码的漏洞，总之还是先来查看源代码：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323204416274.png" alt=""><img src="/2020/03/23/bwapp-day-02/image-20200323204416274.png" class="" title="php"></p>
+<p>这段代码的功能就是执行”echo+参数message”，安全等级低时没有对message参数进行过滤，这样我们只要让message等于我们要执行的代码就好了，把上面的shell_exec()函数拿来现学现用：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-02%5Cimage-20200323204803802.png" alt="image-20200323204803802"><img src="/2020/03/23/bwapp-day-02/image-20200323204803802.png" class="" title="success"></p>
+<p>注入成功！</p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/day02/" rel="tag">day02</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-bWAPP-day-01" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/03/22/bWAPP-day-01/"
+    >bwapp-day-01</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/03/22/bWAPP-day-01/" class="article-date">
+  <time datetime="2020-03-22T04:30:52.000Z" itemprop="datePublished">2020-03-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/bwapp/">bwapp</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="BWAPP-学习笔记-（一）"><a href="#BWAPP-学习笔记-（一）" class="headerlink" title="BWAPP 学习笔记 （一）"></a>BWAPP 学习笔记 （一）</h1><h2 id="A1-Injection"><a href="#A1-Injection" class="headerlink" title="A1 -Injection"></a>A1 -Injection</h2><p>1.HTML Injection</p>
 <p>漏洞介绍：html注入是指用户在输入端输入可执行的HTML代码，而服务端没有对该输入进行合理的过滤，导致浏览器解析执行HTML代码。漏洞危害：严重</p>
 <ul>
 <li><p>Reflected(CET)</p>
@@ -165,6 +271,8 @@
     <footer class="article-footer">
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/day01/" rel="tag">day01</a></li></ul>
+
 
     </footer>
 
@@ -561,7 +669,7 @@
 <!-- #reward -->
 <div id="reward">
   <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <p class="reward-p"><i class="ri-cup-line"></i>大哥大哥谢谢你~</p>
   <div class="reward-box">
     
     <div class="reward-item">
@@ -590,7 +698,7 @@
 <script>
   try {
     var typed = new Typed("#subtitle", {
-      strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
+      strings: ['那是不是你，一只追梦的蚂蚁', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
       startDelay: 0,
       typeSpeed: 200,
       loop: true,
@@ -730,6 +838,23 @@
 
 <script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
 
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="52"
+        src="//music.163.com/outchain/player?type=2&id=1293904980&auto=1&height=32"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
     
   </div>
 </body>

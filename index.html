@@ -69,6 +69,118 @@
     
     
     
+    <article id="post-bwapp-day-03" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/03/24/bwapp-day-03/"
+    >bwapp-day-03</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/03/24/bwapp-day-03/" class="article-date">
+  <time datetime="2020-03-24T11:23:08.000Z" itemprop="datePublished">2020-03-24</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/bwapp/">bwapp</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="BWAPP学习笔记（三）"><a href="#BWAPP学习笔记（三）" class="headerlink" title="BWAPP学习笔记（三）"></a>BWAPP学习笔记（三）</h1><h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h2><ul>
+<li><p>漏洞介绍：</p>
+<p>SQL注入是指把恶意够早啊的SQL命令插入到web表单提交、域名、页面请求字符串中，最终达到欺骗服务器，非法获取数据库数据的目的</p>
+</li>
+<li><p>原理：</p>
+<p>例如，登录时服务器要校验用户的登录名与密码，SQL语句为<code>SELECT  * RROM user WHERE username=&#39;username&#39; AND password=&#39;pwd&#39;</code>其中username和pwd为用户输入的账号密码，此时如果对用户的输入没用进行合理的过滤，那么只需要构造所谓的“万能密码”<code>&#39;or 1#</code>,SQL语句就会变成<code>SELECT  * RROM user WHERE username=&#39;&#39;or 1#&#39;AND password=&#39;pwd&#39;</code>,’’ or 1的结果为true，而#是SQL中的注释符，这样也就成功绕过密码进行登录。</p>
+</li>
+<li><p>分类：</p>
+<p>SQL注入的分类有很多，按照数据类型可以分为数字型、字符型和搜索型；按照提交方式可以分为GET型、POST型、Cookie型的HTTP请求头注入；按照执行结果可以分为报错注入、联合查询注入、盲注和联合查询注入，盲注又可以分为基于时间的盲注和基于布尔的盲注</p>
+</li>
+<li><p>BWAPP中的SQL注入：</p>
+<p>1.GET/Search</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324195041289.png" alt=""><img src="/2020/03/24/bwapp-day-03/image-20200324195041289.png" class="" title="get"></p>
+</li>
+</ul>
+<p>可以看到页面实现的是输入电影名进行查询，而且参数是以GET的方式传递。在输入后面加一个单引号来简单判断注入点。</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324195838065.png" alt=""><img src="/2020/03/24/bwapp-day-03/image-20200324195838065.png" class="" title="panduan"></p>
+<p>从执行的结果来看这应该是基于报错的注入，并且从报错信息的“%”我们可以猜测执行的SQL语句是<code>SELECT * FROM movies WHERE title like &#39;%title%&#39;</code>,所以我们的任务就是将’%进行闭合，输入IRON MAN %’ or 1=1#,这样SQL语句就变为<code>SELECT * FROM movies WHERE title like &#39;%IRON MAN %&#39; or 1=1#%&#39;</code>，就等于是查询了movies表中的所有数据，查看执行结果：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324200619159.png" alt=""><img src="/2020/03/24/bwapp-day-03/image-20200324200619159.png" class="" title="jieguo"></p>
+<p>接下来开始正式注入的第一步——判断字段数：<code>123%&#39; order by 3</code>by后面是我们猜测的字段数，不断递增，直到为8时报错,说明字段数为7</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324202118400.png" alt="image-20200324202118400"><img src="/2020/03/24/bwapp-day-03/image-20200324202118400.png" class="" title="ziduanshu"></p>
+<p>接下来判断可显示的字段：<code>123%&#39; union select 1,2,3,4,5,6,7#</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324202615688.png" alt="image-20200324202615688"><img src="/2020/03/24/bwapp-day-03/image-20200324202615688.png" class="" title="ziduan"></p>
+<p>说明我们可以在2,3,5,4处插入我们的SQL语句。接下来查看当前的数据库和用户<code>123%&#39; union select 1,user(),3,database(),5,6,7#</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324202955525.png" alt="image-20200324202955525"><img src="/2020/03/24/bwapp-day-03/image-20200324202955525.png" class="" title="chakan"></p>
+<p>接下来试着查询数据库下所有的表<code>123%&#39; union select 1,group_concat(table_name),3,4,5,6,7 from information_schema.tables where table_schema=database() #</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324204243872.png" alt="image-20200324204243872"><img src="/2020/03/24/bwapp-day-03/image-20200324204243872.png" class="" title="baobiao"></p>
+<p>接下来我们来查询users表下所有的字段名：<code>123%&#39; union select 1,group_concat(column_name),3,4,5,6,7 from information_schema.columns where table_name=&quot;users&quot; and table_schema=database() #</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324204619789.png" alt="image-20200324204619789"><img src="/2020/03/24/bwapp-day-03/image-20200324204619789.png" class="" title="biaoxia"></p>
+<p>然后我们选择查看login和password字段下的值<code>123%&#39; union select 1,(select group_concat(login,&#39;-&#39;,password,&#39;-&#39;) from users limit 0,1),3,4,5,6,7  #</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324205131205.png" alt="image-20200324205131205"><img src="/2020/03/24/bwapp-day-03/image-20200324205131205.png" class="" title="jieguo"></p>
+<p>这样我们就查询到了表中前两名用户的用户名和密码，显然密码是MD5加密过的，使用MD5解密即可。在medium和high等级下它使用了addslashes（）和mysql_real_escape_string（）函数对输入进行了过滤，对单双引号、反斜杆等符号进行了转义，有兴趣的读者可以自行尝试。</p>
+<p>2.GET/Select</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324205725390.png" alt="image-20200324205725390"><img src="/2020/03/24/bwapp-day-03/image-20200324205725390.png" class="" title="select"></p>
+<p>可以看到这个其实和上面的Search大同小异，只是注入的位置变成了地址栏。在1后面加上单引号，查看报错信息</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324210042437.png" alt="image-20200324210042437"><img src="/2020/03/24/bwapp-day-03/image-20200324210042437.png" class="" title="baocuo"></p>
+<p>通过报错信息我们可以猜测SQL语句为SELECT * FROM movies WHERE id=1,所以这不仅是基于报错的注入，还是数字型的注入。在1后面加上and 1=1语句能够正常执行</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324210359054.png" alt="image-20200324210359054"><img src="/2020/03/24/bwapp-day-03/image-20200324210359054.png" class="" title="and1&#x3D;1"></p>
+<p>接下来就是判断字段数，重复上面的步骤，需要注意的是，输入语句时要让movie始终等于0，这样是为了让前半条语句报错，从而才能显示后半条语句的结果</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-03%5Cimage-20200324210830544.png" alt="image-20200324210830544"><img src="/2020/03/24/bwapp-day-03/image-20200324210830544.png" class="" title="poc"></p>
+<p>3.POST/Search和POST/Select</p>
+<p>这两个注入的方法和GET型是一样的，只需要抓包然后按步骤修改注入点即可。</p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/212/" rel="tag">212</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-bwapp-day-02" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -628,11 +740,11 @@
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+      <a class="nav-item-link" href="/categories/%E8%AF%BB%E4%B9%A6/">旅行</a>
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
+      <a class="nav-item-link" href="/categories/Java/">Java</a>
     </li>
     
     <li class="nav-item">

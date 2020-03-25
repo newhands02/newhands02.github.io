@@ -69,6 +69,105 @@
     
     
     
+    <article id="post-bwapp-day-04" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/03/25/bwapp-day-04/"
+    >bwapp-day-04</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/03/25/bwapp-day-04/" class="article-date">
+  <time datetime="2020-03-25T11:36:54.000Z" itemprop="datePublished">2020-03-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/bwapp/">bwapp</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="BWAPP学习笔记（四）"><a href="#BWAPP学习笔记（四）" class="headerlink" title="BWAPP学习笔记（四）"></a>BWAPP学习笔记（四）</h1><h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h2><p>1.AJAX/JSON/JQUERY</p>
+<p>进入到页面后，发现也是查询电影名，但与之前不同的是输入与查询是同时进行的,标题也没有明显提</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325194945787.png" alt=""><img src="/2020/03/25/bwapp-day-04/image-20200325194945787.png" class="" width="01"></p>
+<p>示，所以来看看网页的源代码：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325195306276.png" alt=""><img src="/2020/03/25/bwapp-day-04/image-20200325195306276.png" class="" width="02"></p>
+<p>通过阅读网页的源代码我们发现与之前的表单查询不同，这里使用的是AJAX的方式向sqli_10-2.php发送了一次异步请求，getJSON是jQuery中的函数，作用的通过HTTP GET请求载入JSON数据，参数是search，然后将返回的结果输出，那么sqli_10-2的作用便是处理数据，我们也来看看它的代码：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325195959393.png" alt=""><img src="/2020/03/25/bwapp-day-04/image-20200325195959393.png" class="" width="03"></p>
+<p>代码共有两部分，一部分是过滤函数sqli自然不必多说，另一部分就是上图的处理函数，获取title查询数据最后将结果以json形式返回。弄清楚原理之后，可以知道直接在url注入是没用的，到可以在搜索框注入，还可以通过sqli_10-2的url进行注入！具体的注入步骤与之前相同。</p>
+<p>2.CAPTCHA</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325202218418.png" alt=""><img src="/2020/03/25/bwapp-day-04/image-20200325202218418.png" class="" width="05"></p>
+<p>不是很明白这一关的目的是什么。。。。进入页面前会先让我们输入验证码，阅读了源代码发现就是比较验证码是否一样，想要绕过验证码的大神可以自行尝试，总之是和sql注入没啥关系。校验成功之后跳转到这个页面，和之前的Search一模一样。。。。</p>
+<p>3.Login Form/Hero</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325202937035.png" alt="image-20200325202937035"><img src="/2020/03/25/bwapp-day-04/image-20200325202937035.png" class="" width="05"></p>
+<p>很明显是登录的功能，这也是SQL注入的典型场景，尝试着在用户名后面加上单引号，密码随意：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325203155500.png" alt="image-20200325203155500"><img src="/2020/03/25/bwapp-day-04/image-20200325203155500.png" class="" width="06"></p>
+<p>从报错的信息我们不能猜测执行的SQL语句为<code>SELECT * FROM users WHERE username=&#39;login&#39; AND password=&#39;pwd&#39;</code>，所以，我们可以构造语句<code>123&#39; or 1=1#</code>这样就可以绕过密码直接登录</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325203527121.png" alt="image-20200325203527121"><img src="/2020/03/25/bwapp-day-04/image-20200325203527121.png" class="" width="07"></p>
+<p>4.Stored/blog</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325204343084.png" alt="image-20200325204343084"><img src="/2020/03/25/bwapp-day-04/image-20200325204343084.png" class="" width="06"></p>
+<p>与之前的HTML存储型注入类似，是一个类似于博客发言的功能，在输入后面加上单引号:</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325204612041.png" alt=""><img src="/2020/03/25/bwapp-day-04/image-20200325204612041.png" class="" width="08"></p>
+<p>从报错的信息来看我们可以猜测SQL语句为：<code>INSERT INTO blog(date,entry,owner)values(now(),&#39;$entry&#39;,&#39;bee&#39;)</code>,然后使用联合查询爆出数据库<code>test&#39;, (select database())) #</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325205043981.png" alt="image-20200325205043981"><img src="/2020/03/25/bwapp-day-04/image-20200325205043981.png" class="" title="lala"></p>
+<p>然后爆表<code>test&#39;,(select group_concat(table_name) from information_schema.tables where table_schema=database())) #</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325205625154.png" alt="image-20200325205625154"><img src="/2020/03/25/bwapp-day-04/image-20200325205625154.png" class="" width="092"></p>
+<p>之后的步骤参照前文。</p>
+<p>5.User-Agent</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325211020494.png" alt=""><img src="/2020/03/25/bwapp-day-04/image-20200325211020494.png" class="" title="dayaya"></p>
+<p>页面是会显示当前IP和UA，根据提示我们的UA已经写入到了数据库中，说明存在SQL注入，而且注入点就在User-Agent处，抓包，使用联合注入的方式即可</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325210847192.png" alt=""><img src="/2020/03/25/bwapp-day-04/image-20200325210847192.png" class="" title="fasfaf"></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-04%5Cimage-20200325210921247.png" alt=""><img src="/2020/03/25/bwapp-day-04/image-20200325210921247.png" class="" title="dhafi"></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-bwapp-day-03" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 

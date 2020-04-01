@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    jvm_01 |  Hexo
+    jvm-02 |  Hexo
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -30,7 +30,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-jvm-01" class="article article-type-post" itemscope
+  <article id="post-jvm-02" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -38,7 +38,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  jvm_01
+  jvm-02
 </h1>
   
 
@@ -47,14 +47,10 @@
 
     
     <div class="article-meta">
-      <a href="/2020/03/27/jvm-01/" class="article-date">
-  <time datetime="2020-03-27T10:40:20.000Z" itemprop="datePublished">2020-03-27</time>
+      <a href="/2020/03/30/jvm-02/" class="article-date">
+  <time datetime="2020-03-30T06:48:34.000Z" itemprop="datePublished">2020-03-30</time>
 </a>
       
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Java/">Java</a> / <a class="article-category-link" href="/categories/Java/JVM/">JVM</a>
-  </div>
-
       
       
 <div class="word_count">
@@ -62,7 +58,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">3.3k字</span>
+            <span class="post-count">1.3k字</span>
         </span>
     </span>
 
@@ -71,7 +67,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">11分钟</span>
+            <span class="post-count">4分钟</span>
         </span>
     </span>
 </div>
@@ -96,95 +92,53 @@
       
 
       
-      <h1 id="JAVA架构知识整理（一）"><a href="#JAVA架构知识整理（一）" class="headerlink" title="JAVA架构知识整理（一）"></a>JAVA架构知识整理（一）</h1><h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><p>1.基本概念：</p>
-<p>​    JVM（Java Virtual Machine）是可运行Java代码的假想计算机，包括一套字节代码指令集，一组寄存器，栈，堆，存储方法区和垃圾回收机制。JVM运行在操作系统之上，没有与硬件进行交互。</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cjvm-01%5CJVM.png" alt=""><img src="/2020/03/27/jvm-01/JVM.png" class="" title="jvm"></p>
-<p>2.基本原理：</p>
-<p>​    我们所编写的java源代码通过编译器编译为.class文件（字节码文件），而字节码文件又通过JVM中的解释器编译为特定机器的机器码，所以相同的java代码经过不同的解释器解释之后能够在不同的环境中运行，这就是java能够跨平台运行的原因。</p>
-<p>3.线程：</p>
-<p>​    JVM允许一个应用运行多个线程，JVM中的线程与操作系统中的原生线程有直接的映射关系，当线程准备就绪时，原生线程就会被创建，当原生线程初始化完成时，就会调用线程的run方法，线程运行结束时，原生线程和线程的资源都将被释放。</p>
-<p>​    JVM中的线程类型有虚拟机线程（VM Thread）、垃圾回收线程（GC Thread）、编译器线程和信号分发线程。虚拟机线程在JVM执行安全点操作时会被创建，安全点操作有stop-the-world垃圾回收，线程dump，线程暂停，线程偏向锁解除。虚拟机线负责这些操作的定时器事件（中断），来调度周期性操作的执行。GC线程负责JVM中不同的垃圾回收机制。编译器线程负责将字节码文件编译成对应的机器码文件。信号分发线程接收JVM发送的信号并调用响应的JVM方法。</p>
-<p>4.JVM内存区域</p>
-<p>​    JVM内存区域分为方法区，堆，虚拟机栈、本地栈、程序计数器（寄存器），其中方法区和堆是线程共享的，其他则是线程私有的。</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cjvm-01%5CJVM%E5%86%85%E5%AD%98.png" alt=""><img src="/2020/03/27/jvm-01/JVM%E5%86%85%E5%AD%98.png" class="" title="neicun"></p>
-<p>​    线程私有区域的生命周期同线程相同，线程共享区域随虚拟机的开启/关闭而创建/销毁。</p>
-<p>​    直接内存不是JVM运行时数据区域的一部分，不受GC管理。</p>
-<p>​    程序计数器是一块较小的内存空间，之前指向当前执行线程的字节码指令的位置，每个线程都有自己独立的程序计数器。程序计数器是JVM中唯一不会出现OOM的区域。</p>
-<p>​    虚拟机栈是描述Java方法执行的内存模型，每个方法执行时都伴随着一个栈帧的创建，用于存储局部变量表、操作数栈、动态链接、方法出口等信息，方法的执行到结束对应着栈帧在虚拟机栈中的出栈与入栈。</p>
-<p>​    本地方法栈的作用于虚拟机栈相同，区别在于虚拟机栈服务的是Java方法，而本地方法栈则是服务于Native方法。</p>
-<p>​    java中创建的对象都存放在堆中，堆从垃圾回收的角度可以分为新生代和老年代，新生代又可分为eden、from survivor和to survivor三个区域。</p>
-<p>​    方法区也是我们常说的永久代，用于存储被JVM加载的类信息、常量、静态变量等数据。方法区中的常量池用来存放编译器生成的各种字面量和符号引用。</p>
-<p>4.堆</p>
-<p>​    堆是JVM运行时的重要区域，用来存放我们创建的对象，从GC的角度可以将堆分为新生代和老年代。</p>
-<p>​    新生代是用来存放新生的对象，一般占堆空间的1/3，是MinorGC发生的主要区域，新生代被分为endn、from survivor、to survivor三个区域。eden区占新生代的8/10，是新对象的出生地（但如果新创建的对象很大，则直接分配到老年代），当eden区满时会触发一次MinorGC；from survivor是上一次GC的幸存者，也是这一次的扫描目标；to survivor 是这一次扫描的幸存者。</p>
-<p>​    MinorGC采用的是复制算法，主要的过程是复制——清除——互换。<strong>1</strong>.将eden区和from survivor区中的对象复制到to survivor区，并且对象年龄+1（年龄达到标准和to survivor放不下的就移到老年代）；<strong>2</strong>.清除eden区和from survivor区的对象；<strong>3</strong>.将from survivor和to survivor区互换，这次的to survivor称为下一次的from survivor</p>
-<p>​    老年代主要存放的是生命周期较长的对象，老年代中的对象比较稳当，不会像新生代那样频繁地执行GC。老年代对应的GC机制是Major GC，Major GC使用的是标记—清除算法：扫描所有老年代对象，标记出存货对象，然后清除没有标记的对象。当老年代的内存空间满了放不下时，就会抛出OOM异常。</p>
-<p>5.方法区</p>
-<p>​    方法区也叫做JVM中的永久代，指内存的永久保存区域，主要存放class信息和元数据信息，class文件在被加载时放入方法区，与堆不同的是，GC不会在主程序运行期间对方法区进行清理，者也就导致了方法区的内容会随着加载的class文件的增多而膨胀，最终抛出OOM异常。</p>
-<p>​    在Java8中，永久代的区域已经被元数据区（元空间）取代，元空间与永久代最大的区别在于：元空间并不在JVM中，而是使用本地内存。因此默认情况下，元空间的大小仅受本地内存的限制。原来方法区中的元数据存放到本地内存中，而字符串池和类的静态标量则移至java堆中。</p>
-<p>6.垃圾回收与算法</p>
-<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cjvm-01%5CJVM+GC.png" alt=""><img src="/2020/03/27/jvm-01/JVM+GC.png" class="" title="gc"></p>
+      <h1 id="JAVA架构知识整理（二）"><a href="#JAVA架构知识整理（二）" class="headerlink" title="JAVA架构知识整理（二）"></a>JAVA架构知识整理（二）</h1><h2 id="JVM（二）"><a href="#JVM（二）" class="headerlink" title="JVM（二）"></a>JVM（二）</h2><p>1.IO模型</p>
 <ul>
-<li><p>如何确定垃圾</p>
-<ul>
-<li>引用计数法</li>
+<li>阻塞IO模型：是最传统的IO模型，用户线程发出IO请求后，内核会去查看数据是否准备就绪，如果没有则用户线程保持阻塞，直到数据准备就绪，内核将结果返回给线程。</li>
+<li>非阻塞IO：用户线程发出IO请求后，无论数据是否准备好都会得到结果，如果结果是error，用户线程就可以再次发送请求。但也因此用户线程会不断的向内核查询数据是否准备好，持续占用CPU。</li>
+<li>多路复用IO模型：用一个线程不断去轮询多个socket的状态，只有当socket真正有读写事件时，才真正调用实际的IO操作。因为只需要一个线程去管理多个socket，大大减少了资源占用，而且轮询是在内核中进行的，效率更高。</li>
+<li>信号驱动IO模型：当用户线程发起IO请求，会给对应的socket创建一个信号函数，然后用户线程继续执行。当数据准备就绪后，内核发送信号给用户线程，线程执行信号函数中的IO操作。</li>
+<li>异步IO模型：这是较为理想的模型，当用户线程要执行IO操作时，会向内核发送一个异步的请求，让后继续往下执行；另一方面内核收到异步请求后立即返回，说明已成功收到请求，然后去执行相应的IO操作，再发送一个信号告诉用户线程执行的结果。也就是说，用户线程只需要发送去请求和接收结果，其他交由内核去执行。</li>
 </ul>
-<p>​      java中想要操作对象必须通过引用，所以可以通过引用计数来判断一个对象是否可以回收，如果一个对象的引用计数为0，说明这个对象没有任何与之关联的引用，那么这个对象就是可回收对象。</p>
+<p>2.JAVA NIO</p>
+<p>​    NIO主要有三个核心部分：Channel、Buffer和Selector；传统IO是面向流的，每次从流中读取一个或多个字节，不能移动移动流中的数据，而且流是阻塞的；NIO是面向缓冲区的，数据先被保存到缓冲区中，需要是可以在缓冲区中前后移动，增加了处理的灵活性，NIO还是非阻塞的，在等待数据期间可以执行其他通道中的操作。</p>
 <ul>
-<li>可达性分析</li>
+<li>Channel：也叫作通道，与流（Stream）类似，不过流是单向的（InputStream和OutputStream），而通道是双向的，可读可写。Channel的主要实现类有：FileChannel、DatagramChannel、SocketChannel和ServerSocketChannel。</li>
+<li>Buffer：也就是缓冲区，实际上是有连续数组构成的容器，数据总是从通道读取到缓冲区中，或者从缓冲区写入通道中。NIO中的Buffer是一个抽象类，常用的子类有：ByteBuffer、IntBuffer、CharBuffer、LongBufffer、DoubleBuffer、FloatBuffer、ShortBuffer等。</li>
+<li>Selector：Selor检测多个通道上是否有事件发生，并获取发生的事件进行相应的响应，实现了一个单线程管理多个通道，减少了多线程之间上下文切换到导致的开销。</li>
 </ul>
-<p>​     在引用计数法中，若两个或以上的对象彼此引用，就会造成循环引用的问题，无法清理。针对这一问题，java采用的是可达性分析的方法，将由系统类加载器加载的类、线程、方法栈中的局部变量、被JVM持有的对象等作为一系列的<strong>GC roots</strong>，以GC root作为起点，如果一个对象和GC roots之间没有可达路径，就会被标记为不可达对象，经过两次标记之后不可达对象将会变为可回收对象，面临垃圾回收。</p>
+<p>3.JVM类加载</p>
+<p>​    JVM类加载机制分为五个阶段：</p>
+<ul>
+<li><p>加载：在内存中生成代表这个类的java.lang.Class对象，作为这个类在方法区的入口。</p>
 </li>
-<li><p>回收算法</p>
-<ul>
-<li>标记-清除算法</li>
-</ul>
-<p>​       前面也有讲过，标记-清除算法先扫面全部对象，标记出存活对象，清除没有标记的对象。该算法的缺点是容易造成内存碎片化，导致大对象找不到足够的内存空间。</p>
-<ul>
-<li><p>复制算法</p>
-<p>复制算法很好的解决的内存碎片的问题，该算法现将内存等分为来两块，每次只使用其中</p>
+<li><p>验证：确保Class文件的字节流中包含的信息符合要求</p>
 </li>
-</ul>
-<p>一块，当一块内存满了之后，将存活的对象复制到另一块中，再把已使用的内存清除。该算法的缺点是降低了内存的使用效率。</p>
-<ul>
-<li><p>标记-整理算法</p>
-<p>该算法结合了复制算法和标记清除算法的特点，第一阶段也是扫描标记出存活的对象，然后将</p>
+<li><p>准备：在方法区中分配类变量的使用空间。</p>
 </li>
-</ul>
-<p>存活的对象移向内存的一端，然后清除这一端边界外的对象。</p>
+<li><p>解析：JVM将常量池中的符号引用替换为直接引用。</p>
 <ul>
-<li><p>分代收集算法</p>
-<p>分代收集算法是目前大多数JVM采用的算法，其核心思想是根据对象存活的不同生命周期将内</p>
-</li>
-</ul>
-<p>存划分为不同的域。一般将GC堆分为新生代和老生代。新生代每次都有大量垃圾要回收，而老生代则较为稳定，因此根据不同的区域选择不同的回收算法。新生代的Minor GC和老生代的 Major GC在此就不再赘述。</p>
-</li>
-</ul>
-<p>7.Java中的四种引用类型</p>
-<ul>
-<li>强引用：把一个对象直接赋给一个引用变量，这个变量就是对象的强引用。当一个对象被强引用时，它处于可达状态，就不会被垃圾回收，即使永远不会被用到！因此强引用是造成Java内存泄露的与主要原因之一。</li>
-<li>软引用：通过SoftReference类实现的引用，当系统内存不足时，软引用对象就会被回收。软引用对象通常用在对内存敏感的程序中。</li>
-<li>弱引用：通过WeakReference类实现的引用，比软引用的生存周期更短，只要垃圾回收一运行，不管内存是否足够，弱引用对象都将被回收。</li>
-<li>虚引用：通过PhantomReference类实现的引用，不能单独使用，必须和引用队列联合使用。虚引用主要用来跟踪对象被垃圾回收的状态。</li>
-</ul>
-<p>8.分区收集法</p>
-<pre><code>JVM中还有一种垃圾收集法叫分区收集法，分代收集法是将堆空间按照对象的生命周期划分为不同的域，而分区收集法将整个堆空间划分为连续的不同小区间，每个小区间独立使用，独立回收，根据目标的停顿时间，每次合理的回收若干个小区间，从而减少一次GC产生的停顿。</code></pre><p>9.垃圾收集器</p>
-<p>​    Java堆内存大多被分为新生代和老年代，JVM针对不同的分区提供了多种不同的垃圾收集器，JDK1.6中Sun HotSpot虚拟机提供的收集器有：</p>
-<ul>
-<li>Serial（单线程，复制算法）：Serial是最基本的垃圾收集器，使用的是复制算法，使用单线程完成收集工作，在进行垃圾收集工作的同时，必须暂停替他所有工作线程，直到收集工作结束。优点是简单高效，在单CPU环境下可以获得最高的垃圾回收效率，是JVM运行在Client模式下默认的新生代GC收集器。</li>
-<li>ParNew（Serial+多线程）：是Serial的多线程版本，与Serial的唯一区别就在于使用多线程进行垃圾收集工作。可以通过-XX:ParallelGCThreads来设置工作时的线程数。默认线程数和CPU数目相同。ParNew是很多JVM运行在Server模式下新生代的GC收集器。</li>
-<li>Parallel Scavenger（多线程，复制算法）：也是一个新生代收集器，使用复制算法，多线程工作，Parallel Scavenger的特点是其自适应调节策略，控制程序的吞吐量（吞吐量=运行用户代码时间/（运行用户代码时间+垃圾收集时间）），尽快完成程序的运算任务，主要使用于在后台运算而不需要太多交互的任务。</li>
-<li>Serial Old：是Serial的老年代版本，单线程，使用的是标记-整理算法，是JVM运行在Client模式下默认的老年代代GC收集器。</li>
-<li>Parallel old（多线程，标记整理算法）：Parallel Scavenger的老年代版本，在JDK之前，Parallel Scavenger只能搭配Serial Old使用，结果是保证新生代的吞吐量有限，但无法保证整体的吞吐量，Parallel old出现后，如果系统对吞吐量的要求较高，就可以使用Parallel Scavenger+Parallel old。</li>
-<li>CMS（多线程，标记清除算法）：CMS（Concurrent mark sweep）是一种老年代收集器，主要目标是获取最短垃圾回收停顿时间，使用多线程的标记-清除算法。其工作机制分为四个阶段“<ul>
-<li>初始标记：标记GC roots能直接关联的对象，速度很快，但仍需暂停其他所有线程。</li>
-<li>并发标记：进行GC roots跟踪，和用户线程一起工作，不需要暂停其他线程。</li>
-<li>重新标记：修正并发标记期间因用户程序继续运行而导致标记产生变动的那一部分对象，需要暂停其他线程。</li>
-<li>并发清除：清除GC roots不可达对象，不需要暂停线程。</li>
+<li>符号引用：class文件中的CONSTANT_Class_info\CONSTANT_Field_info\CONSTANT_Method_info等类型的常量</li>
+<li>直接引用：可以是指向目标的指针、相对偏移量或是能间接定位到目标的句柄。如果有了直接引用，那引用的目标必定已经在内存中</li>
 </ul>
 </li>
-<li>G1收集器：Garbage first收集器的特点有：1.基于标记-整理算法，不产生内存碎片。2.非常精确的控制停顿时间，实现低停顿垃圾回收而不牺牲吞吐量。G1收集器把堆内存划分为大小固定的几个独立区域，并且跟踪每个区域的垃圾回收进度，同时在后台维护一个优先级队列，每次根据所允许的收集时间，优先回收垃圾最多的区域。</li>
+<li><p>初始化：执行类构造器<client>方法的过程</p>
+<ul>
+<li>类构造器方法是有编译器自动收集类中的类变量的赋值操作和静态语句块中的语句合并而成的</li>
 </ul>
+<p>在以下几种情况不会执行类初始化：1.子类引用父类的静态字段，只会引发父类的初始化。2.定义对象数组不会初始化。3.常量编译时会存入调用类的常量池中，不会被初始化。4.通过类名获取class对象。5.通过class.forName加载指定类，initialize参数为false时。6.通过ClassLoader默认的loadClass方法</p>
+</li>
+</ul>
+<p>4.类加载器</p>
+<p>​    类的加载在JVM外部实现，JVM提供了三种加载器让应用程序选择：</p>
+<ul>
+<li>启动类加载器：加载JAVA_HOME\lib下的类</li>
+<li>拓展类加载器：加载JAVA_HONE\lib\ext目录下或通过java.ext.dirs系统变量指定路径下的类</li>
+<li>应用程序类加载器：加载用户路径（classPath）中的类库</li>
+<li>我们也可以自定义类的加载器</li>
+</ul>
+<p>JVM通过双亲委派模型进行类的加载。当一个类收到类加载请求时，会将请求向上委派给类，每一层的类加载器都是如此，当父类加载器在加载路径下没有找到所需的class，子类加载器再自己进行加载。</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cjvm-02%5Cimage-20200330164428510.png" alt="image-20200330164428510"><img src="/2020/03/30/jvm-02/image-20200330164428510.png" class="" title="classloader"></p>
 
       
       <!-- reward -->
@@ -254,7 +208,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/27/jvm-01/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/30/jvm-02/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -270,19 +224,19 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/03/30/jvm-02/" class="article-nav-link">
+      <a href="/2020/04/01/mybatis/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            jvm-02
+            mybatis
           
         </div>
       </a>
     
     
-      <a href="/2020/03/25/bwapp-day-04/" class="article-nav-link">
+      <a href="/2020/03/27/jvm-01/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">bwapp-day-04</div>
+        <div class="article-nav-title">jvm_01</div>
       </a>
     
   </nav>

@@ -69,6 +69,229 @@
     
     
     
+    <article id="post-mybatis" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/04/01/mybatis/"
+    >mybatis</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/01/mybatis/" class="article-date">
+  <time datetime="2020-04-01T13:16:34.000Z" itemprop="datePublished">2020-04-01</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="Java框架学习"><a href="#Java框架学习" class="headerlink" title="Java框架学习"></a>Java框架学习</h1><h2 id="Mybatis"><a href="#Mybatis" class="headerlink" title="Mybatis"></a>Mybatis</h2><h3 id="使用mybatis完成CURD操作"><a href="#使用mybatis完成CURD操作" class="headerlink" title="使用mybatis完成CURD操作"></a>使用mybatis完成CURD操作</h3><p>1.mybatis介绍：</p>
+<p>​    mybatis是一款持久层框架，支持定制化<a href="https://www.w3cschool.cn/sql/" target="_blank" rel="noopener"> SQL</a>、存储过程以及高级映射。简单来说，我们可以利用mybaits更方便的与数据库进行交互。</p>
+<p>2.环境搭建：</p>
+<ul>
+<li>在Maven环境中导入依赖：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line"> 		&lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;</span><br><span class="line"> 		&lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;</span><br><span class="line"> 		&lt;version&gt;8.0.16&lt;&#x2F;version&gt;</span><br><span class="line"> 	&lt;&#x2F;dependency&gt;</span><br><span class="line"> 	&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.mybatis&lt;&#x2F;groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;mybatis&lt;&#x2F;artifactId&gt;</span><br><span class="line">	&lt;version&gt;3.4.5&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3.编写配置文件</p>
+<p>在resources目录下（没有自行创建）创建mybatis的配置文件mybatis-config.xml</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200401212554579.png" alt="">{ asset_img image-20200401212554579.png}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- mybatis-config.xml --&gt;</span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!-- 导入mybatis的依赖 --&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">  PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Config 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">  &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">	&lt;!-- db.properties里面含有数据库的信息 --&gt;</span><br><span class="line">	&lt;properties resource&#x3D;&quot;db.properties&quot;&gt;&lt;&#x2F;properties&gt;</span><br><span class="line">	&lt;!-- 配置log4j --&gt;</span><br><span class="line">	&lt;settings&gt;</span><br><span class="line">		&lt;setting name&#x3D;&quot;logImpl&quot; value&#x3D;&quot;LOG4J&quot;&gt;&lt;&#x2F;setting&gt;</span><br><span class="line">	&lt;&#x2F;settings&gt;</span><br><span class="line">	&lt;environments default&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">		&lt;environment id&#x3D;&quot;mysql&quot;&gt;</span><br><span class="line">			&lt;!-- 事务管理器类型 --&gt;</span><br><span class="line">			&lt;transactionManager type&#x3D;&quot;JDBC&quot;&gt;&lt;&#x2F;transactionManager&gt;</span><br><span class="line">			&lt;!-- 数据源 --&gt;</span><br><span class="line">			&lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">				&lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;$&#123;driver&#125;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">				&lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;$&#123;url&#125;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">				&lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;$&#123;username&#125;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">				&lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;$&#123;password&#125;&quot;&gt;&lt;&#x2F;property&gt;</span><br><span class="line">			&lt;&#x2F;dataSource&gt;</span><br><span class="line">		&lt;&#x2F;environment&gt;</span><br><span class="line">	&lt;&#x2F;environments&gt;</span><br><span class="line">	&lt;!-- 配置SQL语句的XML文件 --&gt;</span><br><span class="line">	&lt;mappers&gt;</span><br><span class="line">		&lt;!-- 在resources路径下创建这类文件，路径要一致 --&gt;</span><br><span class="line">		&lt;mapper resource&#x3D;&quot;com&#x2F;dao&#x2F;IUserDao.xml&quot;&gt;&lt;&#x2F;mapper&gt;</span><br><span class="line">	&lt;&#x2F;mappers&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<p>完成之后的resources目录应该向下面这样：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200401213234946.png" alt=""><img src="/2020/04/01/mybatis/image-20200401213234946.png" class=""></p>
+<p>db.properties和log4j.properties的内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">driver&#x3D;com.mysql.cj.jdbc.Driver</span><br><span class="line">    url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;xxxx?serverTimezone&#x3D;UTC&amp;useSSL&#x3D;false</span><br><span class="line">    username&#x3D;root</span><br><span class="line">    password&#x3D;root</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Global logging configuration</span><br><span class="line">log4j.rootLogger&#x3D;ERROR, stdout</span><br><span class="line"></span><br><span class="line"># MyBatis logging configuration...</span><br><span class="line">log4j.logger.cn.mybatis.mydemo.mapper.PersonMapper&#x3D;DEBUG</span><br><span class="line">log4j.logger.cn.mybatis.mydemo.mapper.CardMapper&#x3D;DEBUG</span><br><span class="line"></span><br><span class="line"># Console output...</span><br><span class="line">log4j.appender.stdout&#x3D;org.apache.log4j.ConsoleAppender</span><br><span class="line">log4j.appender.stdout.layout&#x3D;org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.stdout.layout.ConversionPattern&#x3D;%5p [%t] - %m%n</span><br></pre></td></tr></table></figure>
+
+<p>4.创建实体类：</p>
+<p>​    我们在src/com/entity包下创建一个User类， 包含name和password两个属性</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> String password;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id=id;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getPassword</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> password;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPassword</span><span class="params">(String password)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.password = password;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"User [id="</span>+id+<span class="string">",name="</span> + name + <span class="string">", password="</span> + password + <span class="string">"]"</span>;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5.创建接口：</p>
+<p>​    在src/com/dao包下创建IUserDao接口，里面有增删改查的方法，刚才mybatis-config.xml文件中配置的mapper下的IUserDao.xml文件就是为IUSerDao方法服务的，路径也是参照接口的路径，xml文件里就是我们要执行的sql语句。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.dao;</span><br><span class="line">&#x2F;&#x2F;用户持久层接口</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import com.entity.User;</span><br><span class="line"></span><br><span class="line">public interface IUserDao &#123;</span><br><span class="line">	List&lt;User&gt; findAll();</span><br><span class="line">	void saveUser(User user);</span><br><span class="line">	void updateUser(User user);</span><br><span class="line">	void deleteUser(String name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>6.编写sql语句</p>
+<p>​    在IUserDao.xml文件中配置我们的sql语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line">  PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Config 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">  &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">  &lt;!-- 定位到执行方法的接口 --&gt;</span><br><span class="line">  &lt;mapper namespace&#x3D;&quot;com.dao.IUserDao&quot;&gt;</span><br><span class="line">  	&lt;!-- 定位到方法 --&gt;</span><br><span class="line">  	&lt;select id&#x3D;&quot;findAll&quot; resultType&#x3D;&quot;com.entity.User&quot;&gt;</span><br><span class="line">  		select * from user;</span><br><span class="line">  	&lt;&#x2F;select&gt;</span><br><span class="line">  	&lt;insert id&#x3D;&quot;saveUser&quot; parameterType&#x3D;&quot;com.entity.User&quot;&gt;</span><br><span class="line">  		insert into user(name,password)values(#&#123;name&#125;,#&#123;password&#125;);</span><br><span class="line">  	&lt;&#x2F;insert&gt;</span><br><span class="line">  	&lt;update id&#x3D;&quot;updateUser&quot; parameterType&#x3D;&quot;comm.entity.User&quot;&gt;</span><br><span class="line">  		update user set name&#x3D;#&#123;name&#125;,password&#x3D;#&#123;password&#125; where id&#x3D;#&#123;id&#125;;</span><br><span class="line">  	&lt;&#x2F;update&gt;</span><br><span class="line">  	&lt;delete id&#x3D;&quot;deleteUser&quot; parameterType&#x3D;&quot;java.lang.String&quot;&gt;</span><br><span class="line">  		delete from user where id &#x3D; #&#123;id&#125;</span><br><span class="line">	&lt;&#x2F;delete&gt;</span><br><span class="line">  &lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
+
+<p>mybatis中定义了select,insert,update,delete四种元素，分贝对应增删改查方法，然后id属性对应的是接口中的方法名，resultType对应的是查询结果所要封装的对象类型，parameterType对应的是方法传入的参数类型，两个都必须写全类名。传入参数类型后就可以用#{}的方式在sql语句中引用参数实体类中的属性。</p>
+<p>7.编写实现类执行方法</p>
+<p>​    创建的接口编写的要实现哪些方法，xml文件配置了这些方法对应的sql语句，最后一步就是要编写实现类执行这些方法，在src/com/dao/impl报下创建IUserDao接口的实现类IUserDaoImpl:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">package com.dao.impl;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import org.apache.ibatis.session.SqlSession;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line"></span><br><span class="line">import com.dao.IUserDao;</span><br><span class="line">import com.entity.User;</span><br><span class="line"></span><br><span class="line">public class UserDaoImpl implements IUserDao &#123;</span><br><span class="line">	private SqlSessionFactory sqlSessionFactory;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	public UserDaoImpl(SqlSessionFactory sqlSessionFactory) &#123;</span><br><span class="line">		this.sqlSessionFactory &#x3D; sqlSessionFactory;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public List&lt;User&gt; findAll() &#123;</span><br><span class="line">		SqlSession sqlSession&#x3D;sqlSessionFactory.openSession();</span><br><span class="line">		List&lt;User&gt; users&#x3D;sqlSession.selectList(&quot;com.dao.IUserDao.findAll&quot;);</span><br><span class="line">		sqlSession.commit();</span><br><span class="line">		sqlSession.close();</span><br><span class="line">		return users;</span><br><span class="line">	&#125;</span><br><span class="line">	@Override</span><br><span class="line">	public void saveUser(User user) &#123;</span><br><span class="line">		&#x2F;&#x2F; TODO Auto-generated method stub</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	@Override</span><br><span class="line">	public void updateUser(User user) &#123;</span><br><span class="line">		&#x2F;&#x2F; TODO Auto-generated method stub</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	@Override</span><br><span class="line">	public void deleteUser(String name) &#123;</span><br><span class="line">		&#x2F;&#x2F; TODO Auto-generated method stub</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后用junit测试方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class MybatisTest &#123;</span><br><span class="line">	private SqlSession sqlSession;</span><br><span class="line">	private InputStream in;</span><br><span class="line">	private IUserDao userDao;</span><br><span class="line">	@Before</span><br><span class="line">	public void init() throws IOException &#123;</span><br><span class="line">		in&#x3D;Resources.getResourceAsStream(&quot;Mybatis-config.xml&quot;);</span><br><span class="line">		SqlSessionFactory sqlSessionFactory&#x3D;new 				  SqlSessionFactoryBuilder().build(in);</span><br><span class="line">		userDao&#x3D;new UserDaoImpl(sqlSessionFactory);</span><br><span class="line">	&#125;</span><br><span class="line">	@Test</span><br><span class="line">	public void testFind()&#123;</span><br><span class="line">		List&lt;User&gt;uList&#x3D;userDao.findAll();</span><br><span class="line">		for (User user : uList) &#123;</span><br><span class="line">			System.out.println(user);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	@After</span><br><span class="line">	public void finish() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			in.close();</span><br><span class="line">		&#125; catch (IOException e) &#123;</span><br><span class="line">			&#x2F;&#x2F; TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到利用mybaits的步骤是先加载配置文件的数据流对象，然后创建SqlSessionFactory对象，再调用openSession（）方法创建SqlSession对象，然后又sqlSession执行接口中的方法，上面的代码只完成了查询的操作，不同操作调用的sqlSession方法也不同，大家可以自行尝试。</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200401221058277.png" alt=""><img src="/2020/04/01/mybatis/image-20200401221058277.png" class=""></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-jvm-02" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/03/30/jvm-02/"
+    >jvm-02</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/03/30/jvm-02/" class="article-date">
+  <time datetime="2020-03-30T06:48:34.000Z" itemprop="datePublished">2020-03-30</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="JAVA架构知识整理（二）"><a href="#JAVA架构知识整理（二）" class="headerlink" title="JAVA架构知识整理（二）"></a>JAVA架构知识整理（二）</h1><h2 id="JVM（二）"><a href="#JVM（二）" class="headerlink" title="JVM（二）"></a>JVM（二）</h2><p>1.IO模型</p>
+<ul>
+<li>阻塞IO模型：是最传统的IO模型，用户线程发出IO请求后，内核会去查看数据是否准备就绪，如果没有则用户线程保持阻塞，直到数据准备就绪，内核将结果返回给线程。</li>
+<li>非阻塞IO：用户线程发出IO请求后，无论数据是否准备好都会得到结果，如果结果是error，用户线程就可以再次发送请求。但也因此用户线程会不断的向内核查询数据是否准备好，持续占用CPU。</li>
+<li>多路复用IO模型：用一个线程不断去轮询多个socket的状态，只有当socket真正有读写事件时，才真正调用实际的IO操作。因为只需要一个线程去管理多个socket，大大减少了资源占用，而且轮询是在内核中进行的，效率更高。</li>
+<li>信号驱动IO模型：当用户线程发起IO请求，会给对应的socket创建一个信号函数，然后用户线程继续执行。当数据准备就绪后，内核发送信号给用户线程，线程执行信号函数中的IO操作。</li>
+<li>异步IO模型：这是较为理想的模型，当用户线程要执行IO操作时，会向内核发送一个异步的请求，让后继续往下执行；另一方面内核收到异步请求后立即返回，说明已成功收到请求，然后去执行相应的IO操作，再发送一个信号告诉用户线程执行的结果。也就是说，用户线程只需要发送去请求和接收结果，其他交由内核去执行。</li>
+</ul>
+<p>2.JAVA NIO</p>
+<p>​    NIO主要有三个核心部分：Channel、Buffer和Selector；传统IO是面向流的，每次从流中读取一个或多个字节，不能移动移动流中的数据，而且流是阻塞的；NIO是面向缓冲区的，数据先被保存到缓冲区中，需要是可以在缓冲区中前后移动，增加了处理的灵活性，NIO还是非阻塞的，在等待数据期间可以执行其他通道中的操作。</p>
+<ul>
+<li>Channel：也叫作通道，与流（Stream）类似，不过流是单向的（InputStream和OutputStream），而通道是双向的，可读可写。Channel的主要实现类有：FileChannel、DatagramChannel、SocketChannel和ServerSocketChannel。</li>
+<li>Buffer：也就是缓冲区，实际上是有连续数组构成的容器，数据总是从通道读取到缓冲区中，或者从缓冲区写入通道中。NIO中的Buffer是一个抽象类，常用的子类有：ByteBuffer、IntBuffer、CharBuffer、LongBufffer、DoubleBuffer、FloatBuffer、ShortBuffer等。</li>
+<li>Selector：Selor检测多个通道上是否有事件发生，并获取发生的事件进行相应的响应，实现了一个单线程管理多个通道，减少了多线程之间上下文切换到导致的开销。</li>
+</ul>
+<p>3.JVM类加载</p>
+<p>​    JVM类加载机制分为五个阶段：</p>
+<ul>
+<li><p>加载：在内存中生成代表这个类的java.lang.Class对象，作为这个类在方法区的入口。</p>
+</li>
+<li><p>验证：确保Class文件的字节流中包含的信息符合要求</p>
+</li>
+<li><p>准备：在方法区中分配类变量的使用空间。</p>
+</li>
+<li><p>解析：JVM将常量池中的符号引用替换为直接引用。</p>
+<ul>
+<li>符号引用：class文件中的CONSTANT_Class_info\CONSTANT_Field_info\CONSTANT_Method_info等类型的常量</li>
+<li>直接引用：可以是指向目标的指针、相对偏移量或是能间接定位到目标的句柄。如果有了直接引用，那引用的目标必定已经在内存中</li>
+</ul>
+</li>
+<li><p>初始化：执行类构造器<client>方法的过程</p>
+<ul>
+<li>类构造器方法是有编译器自动收集类中的类变量的赋值操作和静态语句块中的语句合并而成的</li>
+</ul>
+<p>在以下几种情况不会执行类初始化：1.子类引用父类的静态字段，只会引发父类的初始化。2.定义对象数组不会初始化。3.常量编译时会存入调用类的常量池中，不会被初始化。4.通过类名获取class对象。5.通过class.forName加载指定类，initialize参数为false时。6.通过ClassLoader默认的loadClass方法</p>
+</li>
+</ul>
+<p>4.类加载器</p>
+<p>​    类的加载在JVM外部实现，JVM提供了三种加载器让应用程序选择：</p>
+<ul>
+<li>启动类加载器：加载JAVA_HOME\lib下的类</li>
+<li>拓展类加载器：加载JAVA_HONE\lib\ext目录下或通过java.ext.dirs系统变量指定路径下的类</li>
+<li>应用程序类加载器：加载用户路径（classPath）中的类库</li>
+<li>我们也可以自定义类的加载器</li>
+</ul>
+<p>JVM通过双亲委派模型进行类的加载。当一个类收到类加载请求时，会将请求向上委派给类，每一层的类加载器都是如此，当父类加载器在加载路径下没有找到所需的class，子类加载器再自己进行加载。</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cjvm-02%5Cimage-20200330164428510.png" alt="image-20200330164428510"><img src="/2020/03/30/jvm-02/image-20200330164428510.png" class="" title="classloader"></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-jvm-01" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 

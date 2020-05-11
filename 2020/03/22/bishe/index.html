@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    如何搭建个人博客 |  Hexo
+    bwapp-day-01 |  Hexo
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -30,7 +30,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-如何搭建个人博客" class="article article-type-post" itemscope
+  <article id="post-bishe" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -38,7 +38,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  如何搭建个人博客
+  bwapp-day-01
 </h1>
   
 
@@ -47,8 +47,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="article-date">
-  <time datetime="2020-03-21T12:01:49.000Z" itemprop="datePublished">2020-03-21</time>
+      <a href="/2020/03/22/bishe/" class="article-date">
+  <time datetime="2020-03-22T04:30:52.000Z" itemprop="datePublished">2020-03-22</time>
 </a>
       
       
@@ -58,7 +58,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">886字</span>
+            <span class="post-count">2.2k字</span>
         </span>
     </span>
 
@@ -67,7 +67,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3分钟</span>
+            <span class="post-count">8分钟</span>
         </span>
     </span>
 </div>
@@ -92,124 +92,118 @@
       
 
       
-      <h1 id="如何搭建免费的个人博客"><a href="#如何搭建免费的个人博客" class="headerlink" title="如何搭建免费的个人博客"></a>如何搭建免费的个人博客</h1><h2 id="使用Github-NodeJS-Hexo"><a href="#使用Github-NodeJS-Hexo" class="headerlink" title="使用Github+NodeJS+Hexo"></a>使用Github+NodeJS+Hexo</h2><p>1.环境搭建</p>
+      <h1 id="攻防平台演练指导"><a href="#攻防平台演练指导" class="headerlink" title="攻防平台演练指导"></a>攻防平台演练指导</h1><h2 id="A1-Injection"><a href="#A1-Injection" class="headerlink" title="A1 -Injection"></a>A1 -Injection</h2><p>1.HTML Injection</p>
+<p>漏洞介绍：html注入是指用户在输入端输入可执行的HTML代码，而服务端没有对该输入进行合理的过滤，导致浏览器解析执行HTML代码。漏洞危害：严重</p>
 <ul>
-<li><p>下载Git Bash</p>
-<ul>
-<li>使用Git完成对文章的推送，支持不同的操作系统，<a href="https://gitforwindows.org/" target="_blank" rel="noopener">下载地址</a> 。下面以windows系统为例。</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>安装步骤：双击下载好的文件，按照提示安装即可</p>
-<ul>
-<li><p>安装完成后打开命令行或单击右键选择  <code>Git Bash Here</code>,输入 <code>git --version</code>查看是否安装成功。</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319193756792.png" class="" title="gitbash效果图">
+<li><p>Reflected(CET)</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322124442622.png" alt=""></p>
+<p>可以看到页面将我们输入的内容直接输入在页面上，所以尝试如输入<em>POC</em>:<code>&lt;scirpt&gt;alert(document.cookie)&lt;/script&gt;</code></p>
 </li>
 </ul>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322125044982.png" alt=""></p>
+<p>发现代码被成功执行。打开网页源代码，发现它是用htmli（）函数来处理我们的输入</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322133412686.png" alt=""></p>
+<p>找到htmli函数，其实现原理是：根据不同的安全等级采取不同的过滤函数，等级为low是no_check也</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322192313489.png" alt=""></p>
+<p>就是不过滤，等级为medium和high是才用xss_check_1和xss_check_3过滤，函数实现为：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322134022287.png" alt=""></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322134138158.png" alt=""></p>
+<p>可以看到两个函数都是将特殊字符进行html转义，所以可以考虑将&lt;&gt;用%3c、%3e的形式进行绕过</p>
+<ul>
+<li>Reflected（POST）</li>
+</ul>
+<p>POST和GET在注入方式上没有本质上的不同，二者的区别在于参数传递的方式，GET方式是将输入的内容以?arg1=value1 and arg2=value2….的方式拼接到请求的url后面传递给服务器，而POST方式是将参数放在请求的在请求体中，只有通过抓包的方式才能看见。可以在form等元素的method属性中定义参数的传递方式。</p>
+<ul>
+<li><p>Reflected-URL</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322144315011.png" alt=""></p>
 </li>
 </ul>
+<p>可以看到是将当前的url输出到页面上，所以尝试将POC拼接到当前的url后面，发现我们的输入被转义，没有成功执行。说明事情没有这么简单，所以尝试打开网页源码，同样找到处理的函数，发现在</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322164915762.png" alt=""></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322173542148.png" alt=""></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322165542811.png" alt=""></p>
+<p>结果成功进行了注入！</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322165629418.png" alt=""></p>
+<p>安全等级为medium时使用script代码代替直接输出，目前还不知道如何绕过，欢迎大佬指点！</p>
 <ul>
-<li><p>下载NodeJS</p>
-<ul>
-<li>Hexo是基于NodeJS环境的静态博客，所以需要先下载NodeJS <a href="https://nodejs.org/en/" target="_blank" rel="noopener">下载地址</a></li>
-</ul>
+<li><p>Stored(blog)</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5CbWAPP-day-01%5Cimage-20200322181501156.png" alt=""></p>
+<p>可以看到是类似于留言板的功能，也是将我们输入的内容输出到页面上，注入过程同上</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200322165629418.png" alt=""></p>
+<p>与上面反射型的注入不同的是存储型的注入是长期存在的，输入一次后每次该页面被访问代码都将执行，危害更大。</p>
+<h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h2><ul>
+<li><p>漏洞介绍：</p>
+<p>SQL注入是指把恶意够早啊的SQL命令插入到web表单提交、域名、页面请求字符串中，最终达到欺骗服务器，非法获取数据库数据的目的</p>
 </li>
-<li><p>安装步骤：双击下载好的文件，按照提示完成安装，<strong>注意</strong>：在Custom Setup 这一步选择<code>Add to PATH</code>,这样可以不用再去配置环境变量</p>
+<li><p>原理：</p>
+<p>例如，登录时服务器要校验用户的登录名与密码，SQL语句为<code>SELECT  * RROM user WHERE username=&#39;username&#39; AND password=&#39;pwd&#39;</code>其中username和pwd为用户输入的账号密码，此时如果对用户的输入没用进行合理的过滤，那么只需要构造所谓的“万能密码”<code>&#39;or 1#</code>,SQL语句就会变成<code>SELECT  * RROM user WHERE username=&#39;&#39;or 1#&#39;AND password=&#39;pwd&#39;</code>,’’ or 1的结果为true，而#是SQL中的注释符，这样也就成功绕过密码进行登录。</p>
 </li>
-<li><p>安装完成后在命令行或GitBash中输入命令<code>node -v</code>查看是否安装成功。</p>
-  <img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319195856816.png" class="" title="nodeJS安装">
+<li><p>分类：</p>
+<p>SQL注入的分类有很多，按照数据类型可以分为数字型、字符型和搜索型；按照提交方式可以分为GET型、POST型、Cookie型的HTTP请求头注入；按照执行结果可以分为报错注入、联合查询注入、盲注和联合查询注入，盲注又可以分为基于时间的盲注和基于布尔的盲注</p>
 </li>
-<li><p>下载Hexo</p>
-<ul>
-<li><p>接下来便是安装主角Hexo了</p>
-</li>
-<li><p>选择你想要存放你未来博客的文件夹，然后输入命令 <code>npm install hexo-cli -g</code></p>
-</li>
-<li><p>安装完成后，输入<code>hexo -v</code>查看是否安装成功</p>
- <img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319200638367.png" class="" title="hexo安装">
-</li>
-<li><p>接下来使用<code>hexo init</code>进行初始化操作，完成之后打开安装文件夹出现以下目录：</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319200858769.png" class="" title="初始化操作">
-
-<ul>
-<li><p>.deploy_git存放的是发布的项目</p>
-</li>
-<li><p>node_modules是相关的依赖包</p>
-</li>
-<li><p>public是存放生成的页面</p>
-</li>
-<li><p>scaffolds存放的是生成文章等的模板</p>
-</li>
-<li><p>source存放的是用命令创建的各种文章</p>
-</li>
-<li><p>themes存放博客的主题，博客的主题是可以自己定义的</p>
-</li>
-<li><p>_config.yml:整个博客的配置文件</p>
-</li>
-<li><p>db.json:解析source中的文件得到的</p>
-</li>
-<li><p>package.json项目所需模块的配置信息</p>
+<li><p>BWAPP中的SQL注入：</p>
+<p>1.GET/Search</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324195041289.png" alt=""></p>
 </li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>2.关联到GitHub</p>
-<ul>
-<li><p>要让我们的博客可以被外界访问到，就需要借助GitHub。</p>
-<ul>
-<li><p>首先需要注册GitHub账号</p>
-</li>
-<li><p>创建账号成功之后在首页点击 <strong>Repositories</strong>旁边的<strong>New</strong>按钮，创建一个新的仓库</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319202200025.png" class="" title="创建仓库">
-</li>
-<li><p>创建仓库需要输入仓库的名字，格式是username.github.io，这里的username必须与前面的Owner（也就是与你的用户名一致），然后点击创建即可，之后就可以通过这个域名来访问你的博客。</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319202634270.png" class="" title="创建仓库">
-</li>
-<li><p>然后在GitBash中配置你的账户信息，将下图中双引号的内容替换为自己的用户名的邮箱</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319203101415.png" class="" title="pz">
-
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319203200236.png" class="" title="pz">
-</li>
-<li><p>为增加安全性，我们也创建SSH密钥。在GitBash中shuru<code>ssh-keygen -t rsa -C &quot;填入你的邮箱&quot;</code>,生成过程中会让你输入存放密钥的路径，可按回车选择默认路径。随后在路径中找到id_rsa.pub文件，打开复制文件中的内容，在github的settings中选择SSH and GPG keys，点击New SSH key，title可以随便取，将复制的内容粘贴上去即可。</p>
-<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319205516338.png" class="" title="生成SSH">
-</li>
-<li><p>完成之后在GitBash中输入<code>ssh -T git@github.com</code>,输入密码进行验证<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319205854892.png" class="" title="验证"></p>
-</li>
-</ul>
-</li>
-</ul>
-<p>3.搭建个人博客</p>
-<ul>
-<li><p>修改配置文件</p>
-<ul>
-<li>打开hexo的安装目录，修改<strong>_config.yml</strong>的内容。<strong>注意：冒号之后要加一个英文空格</strong></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;你的账户名&#x2F;你的账户名.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>修改之后保存，然后在bash中分别执行以下命令。然后打开浏览器输入<a href="http://localhost:4000即可访问hexo服务器">http://localhost:4000即可访问hexo服务器</a></p>
-<ul>
-<li>hexo clean</li>
-<li>hexo generate</li>
-<li>hexo server</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>将博客部署到github</p>
-<ul>
-<li><p>在bash中分别执行以下命令</p>
-<ul>
-<li>hexo clean</li>
-<li>hexo generate</li>
-<li>hexo deploy(在部署的过程中需要输入gtihub的账号和密码)</li>
-</ul>
-</li>
-<li><p>部署完成后在浏览器中输入<code>https://之前设置的域名</code>就可以访问你的个人博客了！<img src="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20200319211450869.png" class="" title="yemian"></p>
-</li>
-</ul>
+<p>可以看到页面实现的是输入电影名进行查询，而且参数是以GET的方式传递。在输入后面加一个单引号来简单判断注入点。</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324195838065.png" alt=""></p>
+<p>从执行的结果来看这应该是基于报错的注入，并且从报错信息的“%”我们可以猜测执行的SQL语句是<code>SELECT * FROM movies WHERE title like &#39;%title%&#39;</code>,所以我们的任务就是将’%进行闭合，输入IRON MAN %’ or 1=1#,这样SQL语句就变为<code>SELECT * FROM movies WHERE title like &#39;%IRON MAN %&#39; or 1=1#%&#39;</code>，就等于是查询了movies表中的所有数据，查看执行结果：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324200619159.png" alt=""></p>
+<p>接下来开始正式注入的第一步——判断字段数：<code>123%&#39; order by 3</code>by后面是我们猜测的字段数，不断递增，直到为8时报错,说明字段数为7</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324202118400.png" alt="image-20200324202118400"></p>
+<p>接下来判断可显示的字段：<code>123%&#39; union select 1,2,3,4,5,6,7#</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324202615688.png" alt="image-20200324202615688"></p>
+<p>说明我们可以在2,3,5,4处插入我们的SQL语句。接下来查看当前的数据库和用户<code>123%&#39; union select 1,user(),3,database(),5,6,7#</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324202955525.png" alt="image-20200324202955525"></p>
+<p>接下来试着查询数据库下所有的表<code>123%&#39; union select 1,group_concat(table_name),3,4,5,6,7 from information_schema.tables where table_schema=database() #</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324204243872.png" alt="image-20200324204243872"></p>
+<p>接下来我们来查询users表下所有的字段名：<code>123%&#39; union select 1,group_concat(column_name),3,4,5,6,7 from information_schema.columns where table_name=&quot;users&quot; and table_schema=database() #</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324204619789.png" alt="image-20200324204619789"></p>
+<p>然后我们选择查看login和password字段下的值<code>123%&#39; union select 1,(select group_concat(login,&#39;-&#39;,password,&#39;-&#39;) from users limit 0,1),3,4,5,6,7  #</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324205131205.png" alt="image-20200324205131205"></p>
+<p>这样我们就查询到了表中前两名用户的用户名和密码，显然密码是MD5加密过的，使用MD5解密即可。在medium和high等级下它使用了addslashes（）和mysql_real_escape_string（）函数对输入进行了过滤，对单双引号、反斜杆等符号进行了转义，有兴趣的读者可以自行尝试。</p>
+<p>2.GET/Select</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324205725390.png" alt="image-20200324205725390"></p>
+<p>可以看到这个其实和上面的Search大同小异，只是注入的位置变成了地址栏。在1后面加上单引号，查看报错信息</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324210042437.png" alt="image-20200324210042437"></p>
+<p>通过报错信息我们可以猜测SQL语句为SELECT * FROM movies WHERE id=1,所以这不仅是基于报错的注入，还是数字型的注入。在1后面加上and 1=1语句能够正常执行</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324210359054.png" alt="image-20200324210359054"></p>
+<p>接下来就是判断字段数，重复上面的步骤，需要注意的是，输入语句时要让movie始终等于0，这样是为了让前半条语句报错，从而才能显示后半条语句的结果</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200324210830544.png" alt="image-20200324210830544"></p>
+<p>3.POST/Search和POST/Select</p>
+<p>这两个注入的方法和GET型是一样的，只需要抓包然后按步骤修改注入点即可。</p>
+<p>.AJAX/JSON/JQUERY</p>
+<p>进入到页面后，发现也是查询电影名，但与之前不同的是输入与查询是同时进行的,标题也没有明显提</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325194945787.png" alt=""></p>
+<p>示，所以来看看网页的源代码：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325195306276.png" alt=""></p>
+<p>通过阅读网页的源代码我们发现与之前的表单查询不同，这里使用的是AJAX的方式向sqli_10-2.php发送了一次异步请求，getJSON是jQuery中的函数，作用的通过HTTP GET请求载入JSON数据，参数是search，然后将返回的结果输出，那么sqli_10-2的作用便是处理数据，我们也来看看它的代码：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325195959393.png" alt=""></p>
+<p>代码共有两部分，一部分是过滤函数sqli自然不必多说，另一部分就是上图的处理函数，获取title查询数据最后将结果以json形式返回。弄清楚原理之后，可以知道直接在url注入是没用的，到可以在搜索框注入，还可以通过sqli_10-2的url进行注入！具体的注入步骤与之前相同。</p>
+<p>2.CAPTCHA</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325202218418.png" alt=""></p>
+<p>不是很明白这一关的目的是什么。。。。进入页面前会先让我们输入验证码，阅读了源代码发现就是比较验证码是否一样，想要绕过验证码的大神可以自行尝试，总之是和sql注入没啥关系。校验成功之后跳转到这个页面，和之前的Search一模一样。。。。</p>
+<p>3.Login Form/Hero</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325202937035.png" alt="image-20200325202937035"></p>
+<p>很明显是登录的功能，这也是SQL注入的典型场景，尝试着在用户名后面加上单引号，密码随意：</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325203155500.png" alt="image-20200325203155500"></p>
+<p>从报错的信息我们不能猜测执行的SQL语句为<code>SELECT * FROM users WHERE username=&#39;login&#39; AND password=&#39;pwd&#39;</code>，所以，我们可以构造语句<code>123&#39; or 1=1#</code>这样就可以绕过密码直接登录</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325203527121.png" alt="image-20200325203527121"></p>
+<p>4.Stored/blog</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325204343084.png" alt="image-20200325204343084"></p>
+<p>与之前的HTML存储型注入类似，是一个类似于博客发言的功能，在输入后面加上单引号:</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325204612041.png" alt=""></p>
+<p>从报错的信息来看我们可以猜测SQL语句为：<code>INSERT INTO blog(date,entry,owner)values(now(),&#39;$entry&#39;,&#39;bee&#39;)</code>,然后使用联合查询爆出数据库<code>test&#39;, (select database())) #</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325205043981.png" alt="image-20200325205043981"></p>
+<p>然后爆表<code>test&#39;,(select group_concat(table_name) from information_schema.tables where table_schema=database())) #</code></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325205625154.png" alt="image-20200325205625154"></p>
+<p>之后的步骤参照前文。</p>
+<p>5.User-Agent</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325211020494.png" alt=""></p>
+<p>页面是会显示当前IP和UA，根据提示我们的UA已经写入到了数据库中，说明存在SQL注入，而且注入点就在User-Agent处，抓包，使用联合注入的方式即可</p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325210847192.png" alt=""></p>
+<p><img src="D:%5CMyJava%5Cblog%5Csource_posts%5Cmybatis%5Cimage-20200325210921247.png" alt=""></p>
 </li>
 </ul>
 
@@ -281,15 +275,13 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/22/bishe/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/" rel="tag">blog</a></li></ul>
-
 
     </footer>
 
@@ -299,7 +291,7 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/03/22/bishe/" class="article-nav-link">
+      <a href="/2020/03/22/bWAPP-day-01/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
@@ -309,9 +301,9 @@
       </a>
     
     
-      <a href="/2020/03/19/hello-world/" class="article-nav-link">
+      <a href="/2020/03/21/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Hello World</div>
+        <div class="article-nav-title">如何搭建个人博客</div>
       </a>
     
   </nav>
